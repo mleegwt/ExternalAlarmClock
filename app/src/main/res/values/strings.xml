@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ExternalAlarmClock</string>
+    <string name="enableButton">Enable external alarm clock</string>
+    <string name="edit_message">Enter clock host...</string>
+</resources>
