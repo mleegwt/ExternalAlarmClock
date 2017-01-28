@@ -1,4 +1,15 @@
 apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "com.externalalarmclock.alarmclock.AlarmClockApplication"
+
+project.ext {
+    configPath = "$project.projectDir/src/dist/conf/"
+}
+
+run {
+ args 'server', configPath + 'alarmclock.yml'
+}
 
 dependencies {
     compile 'io.dropwizard:dropwizard-core:1.0.5'

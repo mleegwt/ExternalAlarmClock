@@ -6,6 +6,7 @@
 .settings
 .recommenders
 _0*
+build
 build-eclipse
 /local.properties
 /.idea/workspace.xml

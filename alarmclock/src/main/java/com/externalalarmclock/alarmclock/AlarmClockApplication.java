@@ -2,6 +2,7 @@ package com.externalalarmclock.alarmclock;
 
 import com.externalalarmclock.alarmclock.healthchecks.AlarmClockHealthCheck;
 import com.externalalarmclock.alarmclock.resources.CapabilitiesResource;
+import com.externalalarmclock.alarmclock.resources.SetNextAlarmResource;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -27,6 +28,7 @@ public class AlarmClockApplication extends Application<AlarmClockConfiguration> 
                     Environment environment) {
     	environment.healthChecks().register("alarmclock", new AlarmClockHealthCheck());
         environment.jersey().register(CapabilitiesResource.class);
+        environment.jersey().register(SetNextAlarmResource.class);
     }
 
 }
