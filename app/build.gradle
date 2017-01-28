@@ -25,10 +25,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.loopj.android:android-async-http:1.4.9'
     testCompile 'junit:junit:4.12'
-//    androidTestCompile 'com.android.support.test:runner:0.4'
-    // Set this dependency to use JUnit 4 rules
-//    androidTestCompile 'com.android.support.test:rules:0.4'
-
-    compile 'cz.msebera.android:httpclient:4.4.1.1'
 }
