@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.externalalarmclock.externalalarmclock.pojo.AlarmClockCapabilities;
+import com.externalalarmclock.pojo.AlarmClockCapabilities;
 
 import java.net.URI;
 import java.util.ArrayList;

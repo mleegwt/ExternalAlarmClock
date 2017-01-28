@@ -1,4 +1,4 @@
-package com.externalalarmclock.externalalarmclock.pojo;
+package com.externalalarmclock.pojo;
 
 import java.util.List;
 

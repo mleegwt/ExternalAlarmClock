@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ExternalAlarmClock.iml" filepath="$PROJECT_DIR$/ExternalAlarmClock.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib.externalalarmclock/lib.externalalarmclock.iml" filepath="$PROJECT_DIR$/lib.externalalarmclock/lib.externalalarmclock.iml" />
     </modules>
   </component>
 </project>
