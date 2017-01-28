@@ -16,20 +16,38 @@ allprojects {
     repositories {
         jcenter()
     }
+}
+
+configure(javaProjects()) {
     apply plugin: 'eclipse'
 
     eclipse {
-      classpath {
-        //customizing the classes output directory:
-        defaultOutputDir = file('build-eclipse')
+        classpath {
+            //customizing the classes output directory:
+            defaultOutputDir = file('build-eclipse')
 
-        //default settings for downloading sources and Javadoc:
-        downloadSources = true
-        downloadJavadoc = false
-      }
+            //default settings for downloading sources and Javadoc:
+            downloadSources = true
+            downloadJavadoc = false
+        }
     }
 }
 
+def javaProjects() {
+    subprojects - testProjects() - rootProject() - appProjects()
+}
+
+def testProjects() {
+    subprojects.findAll { it.name.endsWith('.test') }
+}
+
+def rootProject() {
+    [project]
+}
+
+def appProjects() {
+    subprojects.findAll { it.name.endsWith('app') }
+}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
