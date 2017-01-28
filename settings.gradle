@@ -1,1 +1,1 @@
-include ':app', ':lib.externalalarmclock'
+include ':app', ':lib.externalalarmclock', ':alarmclock'

@@ -1,14 +1,21 @@
 package com.externalalarmclock.pojo;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Stores alarm clock capabilities.
  */
 public class AlarmClockCapabilities {
+	@JsonProperty
     private boolean vibrate;
+	@JsonProperty
     private boolean wakeupLight;
-    private List<String> ringTone;
+	@JsonProperty
+    private List<String> ringTone = new ArrayList<>();
+	@JsonProperty
     private boolean streamAudio;
 
     public boolean isVibrate() {

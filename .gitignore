@@ -1,5 +1,12 @@
 *.iml
 .gradle
+.project
+.classpath
+.metadata
+.settings
+.recommenders
+_0*
+build-eclipse
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries

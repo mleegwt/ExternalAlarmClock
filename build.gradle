@@ -16,6 +16,18 @@ allprojects {
     repositories {
         jcenter()
     }
+    apply plugin: 'eclipse'
+
+    eclipse {
+      classpath {
+        //customizing the classes output directory:
+        defaultOutputDir = file('build-eclipse')
+
+        //default settings for downloading sources and Javadoc:
+        downloadSources = true
+        downloadJavadoc = false
+      }
+    }
 }
 
 task clean(type: Delete) {
