@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SettingsActivity" />
+
         <receiver android:name=".AlarmChangedReceiver">
             <intent-filter>
                 <action android:name="android.app.action.NEXT_ALARM_CLOCK_CHANGED" />

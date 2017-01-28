@@ -1,9 +1,9 @@
 package com.externalalarmclock.externalalarmclock;
 
 import android.app.ListFragment;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.widget.ArrayAdapter;
 
@@ -53,9 +53,9 @@ public class AlarmCapabilitiesFragment extends ListFragment {
 
     @NonNull
     private String getHostUrl() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString(getResources().getString(R.string.host_pref),
-                getResources().getString(R.string.host_pref_default));
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        return sharedPref.getString(getResources().getString(R.string.pref_host_uri_key),
+                getResources().getString(R.string.pref_host_uri_default));
     }
 
     public void getCapabilities() {
