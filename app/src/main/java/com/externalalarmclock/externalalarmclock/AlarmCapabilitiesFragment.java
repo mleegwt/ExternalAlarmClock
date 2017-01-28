@@ -4,16 +4,18 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.widget.ArrayAdapter;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.externalalarmclock.externalalarmclock.pojo.AlarmClockCapabilities;
 
-import org.json.JSONObject;
-
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Settings for the alarm clock.
@@ -41,31 +43,55 @@ public class AlarmCapabilitiesFragment extends ListFragment {
     private void updateItems() {
         adapter.notifyDataSetInvalidated();
         adapter.clear();
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        String host = sharedPref.getString(getResources().getString(R.string.host_pref),
-                getResources().getString(R.string.host_pref_default));
 
         String hostKey = getResources().getString(R.string.host_key);
-        adapter.add(new Tuple(hostKey, host));
+        adapter.add(new Tuple(hostKey, URI.create(getHostUrl()).getHost()));
 
         adapter.notifyDataSetChanged();
         getCapabilities();
     }
 
-    public void getCapabilities() {
-        RestClient.get("capabilities", null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject capabilities) {
-                boolean vibrate = capabilities.optBoolean("vibrate");
-                adapter.add(new Tuple("Vibrate", vibrate ? "Yes" : "No"));
-                adapter.notifyDataSetChanged();
-            }
+    @NonNull
+    private String getHostUrl() {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getString(getResources().getString(R.string.host_pref),
+                getResources().getString(R.string.host_pref_default));
+    }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                adapter.add(new Tuple("Data error", throwable.toString()));
-                adapter.notifyDataSetChanged();
-            }
-        });
+    public void getCapabilities() {
+        VolleyHelper.getInstance(getActivity().getApplicationContext())
+                .addToRequestQueue(new GsonRequest<>(getCapabiltiesUrl(), AlarmClockCapabilities.class, null, new Response.Listener<AlarmClockCapabilities>() {
+                    @Override
+                    public void onResponse(AlarmClockCapabilities response) {
+                        if (response.isStreamAudio()) {
+                            addTuple("Stream audio", "Yes");
+                        }
+                        if (response.isVibrate()) {
+                            addTuple("Vibrate", "Yes");
+                        }
+                        if (response.isWakeupLight()) {
+                            addTuple("Wakeup light", "Yes");
+                        }
+                        if (!response.getRingTone().isEmpty()) {
+                            addTuple("Ring tones", Arrays.toString(response.getRingTone().toArray(new String[0])));
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        adapter.add(new Tuple("Data error", error.toString()));
+                        adapter.notifyDataSetChanged();
+
+                    }
+                }));
+    }
+
+    private String getCapabiltiesUrl() {
+        return getHostUrl() + getResources().getString(R.string.get_capabilties);
+    }
+
+    private void addTuple(String key, String value) {
+        adapter.add(new Tuple(key, value));
     }
 }

@@ -10,7 +10,6 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         >
         <uses-permission android:name="android.permission.INTERNET" />
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
         <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
         <activity android:name=".MainActivity">
