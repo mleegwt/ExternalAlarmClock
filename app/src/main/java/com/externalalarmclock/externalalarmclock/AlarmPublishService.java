@@ -1,13 +1,18 @@
 package com.externalalarmclock.externalalarmclock;
 
-import android.app.AlarmManager;
 import android.app.IntentService;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.AlarmClock;
-import android.util.Log;
+import android.support.annotation.DrawableRes;
+import android.support.v4.app.NotificationCompat;
 
-import java.util.Date;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.externalalarmclock.pojo.ExternalAlarm;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests to update the external
@@ -23,6 +28,7 @@ public class AlarmPublishService extends IntentService {
     public static final String EXTRA_WAKEUP_LIGHT_EXTERNAL =
             "android.intent.extra.alarm.WAKEUP_LIGHT" + EXTERNAL;
     public static final String EXTRA_SMART_ALARM = "android.intent.extra.alarm.SMART_ALARM";
+    private static final int MESSAGE_ID = 1;
 
     public AlarmPublishService() {
         super("AlarmPublishService");
@@ -30,22 +36,75 @@ public class AlarmPublishService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        AlarmManager man = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        final String tag_alarm = "tag_alarm";
-        AlarmManager.AlarmClockInfo nextAlarmClock = man.getNextAlarmClock();
-        Log.i(tag_alarm, "Next alarm is " + (nextAlarmClock == null ? "not set " :
-                new Date(nextAlarmClock.getTriggerTime())));
-
-        if (intent != null) {
-            final String action = intent.getAction();
-            if (AlarmClock.ACTION_SET_ALARM.equals(action)) {
+        ExternalAlarm nextAlarm = getExternalAlarm();
+        publishNotification(nextAlarm.getAlarmTime() == null ? R.drawable.ic_alarm_off
+                        : R.drawable.ic_alarm_add, "Publishing alarm",
+                "Alarm is being published, please wait...");
+        GsonRequest<ExternalAlarm> request = new GsonRequest<>(
+                new RestHelper(getApplicationContext()).getSetNextAlarmUrl(), ExternalAlarm.class,
+                null, nextAlarm, new Response.Listener<ExternalAlarm>() {
+            @Override
+            public void onResponse(ExternalAlarm response) {
+                publishNotification(nextAlarm.getAlarmTime() == null ? R.drawable.ic_alarm_off
+                                : R.drawable.ic_alarm_on, "Alarm published",
+                        "External alarm is " + nextAlarm.getAlarmTime() == null ? "disabled." : "set.");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                publishNotification(R.drawable.ic_error_outline, "Failed to publish alarm",
+                        "Communication failed. Your recent alarm changes are not applied to the external alarm.");
+            }
+        });
+        VolleyHelper.getInstance(this).addToRequestQueue(request);
+//        if (intent != null) {
+//            final String action = intent.getAction();
+//            if (AlarmClock.ACTION_SET_ALARM.equals(action)) {
 //                try {
 //                    handleAlarmClockChanged(intent);
 //                } catch (JSONException | IOException e) {
 //                    Log.d("TAG", "External set alarm failed", e);
 //                }
-            }
+//            }
+//        }
+    }
+
+    private ExternalAlarm getExternalAlarm() {
+        ExternalAlarm alarm = new ExternalAlarm();
+        alarm.setAlarmTime(AlarmClockHelper.getNextAlarmClockDate(getApplicationContext()));
+        alarm.setMessage("TODO Message");
+
+        if (alarm.getAlarmTime() == null) {
+            return alarm;
         }
+
+        alarm.setWakeupLight(true);
+
+        // TODO MLE add other alarm options.
+
+        return alarm;
+    }
+
+    private void publishNotification(@DrawableRes int smallIcon, String title, String content) {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(smallIcon)
+                        .setContentTitle(title)
+                        .setContentText(content);
+        Intent resultIntent = new Intent(this, MainActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(MESSAGE_ID, mBuilder.build());
     }
 
 //    private boolean handleAlarmClockChanged(Intent intent) throws JSONException, IOException {

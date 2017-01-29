@@ -1,8 +1,6 @@
 package com.externalalarmclock.externalalarmclock;
 
-import android.app.AlarmManager;
 import android.app.ListFragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -42,12 +40,11 @@ public class AlarmStatusFragment extends ListFragment {
             return;
         }
         adapter.clear();
-        ;
-        AlarmManager man = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        Date date = AlarmClockHelper.getNextAlarmClockDate(getActivity());
+        String nextAlarm = "Next phone alarm: " + (date == null ? "not set " :
+                SimpleDateFormat.getDateTimeInstance().format(date));
         final String tag_alarm = "tag_alarm";
-        AlarmManager.AlarmClockInfo nextAlarmClock = man.getNextAlarmClock();
-        String nextAlarm = "Next phone alarm: " + (nextAlarmClock == null ? "not set " :
-                SimpleDateFormat.getDateTimeInstance().format(new Date(nextAlarmClock.getTriggerTime())));
         Log.i(tag_alarm, nextAlarm);
 
         adapter.add(nextAlarm);

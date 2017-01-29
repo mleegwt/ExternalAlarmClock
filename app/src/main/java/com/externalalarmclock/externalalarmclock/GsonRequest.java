@@ -20,6 +20,7 @@ public class GsonRequest<T> extends Request<T> {
     private final Class<T> clazz;
     private final Map<String, String> headers;
     private final Response.Listener<T> listener;
+    private final T postData;
 
     /**
      * Make a GET request and return a parsed object from JSON.
@@ -34,11 +35,30 @@ public class GsonRequest<T> extends Request<T> {
         this.clazz = clazz;
         this.headers = headers;
         this.listener = listener;
+        this.postData = null;
+    }
+
+    public GsonRequest(String url, Class<T> clazz, Map<String, String> headers, T postData,
+                       Response.Listener<T> listener, Response.ErrorListener errorListener) {
+        super(Request.Method.POST, url, errorListener);
+        this.clazz = clazz;
+        this.headers = headers;
+        this.listener = listener;
+        this.postData = postData;
     }
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
         return headers != null ? headers : super.getHeaders();
+    }
+
+    @Override
+    public byte[] getBody() throws AuthFailureError {
+        if (getMethod() == Method.POST) {
+            return gson.toJson(postData).getBytes();
+        } else {
+            return super.getBody();
+        }
     }
 
     @Override
@@ -53,12 +73,20 @@ public class GsonRequest<T> extends Request<T> {
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));
             return Response.success(
-                    gson.fromJson(json, clazz),
+                    getMethod() == Method.GET ? gson.fromJson(json, clazz) : null,
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
         } catch (JsonSyntaxException e) {
             return Response.error(new ParseError(e));
         }
+    }
+
+    @Override
+    public String getBodyContentType() {
+        if (getMethod() == Method.POST) {
+            return "application/json; charset=" + getParamsEncoding();
+        } else
+            return super.getBodyContentType();
     }
 }

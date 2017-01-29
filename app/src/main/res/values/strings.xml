@@ -7,4 +7,5 @@
     <string name="pref_host_uri_title">Alarm clock hostname</string>
     <string name="pref_host_uri_summary">Hostname of the clock, e.g. http://raspberrypi:8080</string>
     <string name="pref_host_uri_default">http://raspberrypi:8080</string>
+    <string name="set_next_alarm">/setNextAlarm</string>
 </resources>

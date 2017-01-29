@@ -1,10 +1,7 @@
 package com.externalalarmclock.externalalarmclock;
 
 import android.app.ListFragment;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.widget.ArrayAdapter;
 
 import com.android.volley.Response;
@@ -44,23 +41,16 @@ public class AlarmCapabilitiesFragment extends ListFragment {
         adapter.notifyDataSetInvalidated();
         adapter.clear();
 
-        String hostKey = getResources().getString(R.string.host_key);
-        adapter.add(new Tuple(hostKey, URI.create(getHostUrl()).getHost()));
+        adapter.add(new Tuple(getResources().getString(R.string.host_key),
+                URI.create(new RestHelper(getActivity()).getHostUrl()).getHost()));
 
         adapter.notifyDataSetChanged();
         getCapabilities();
     }
 
-    @NonNull
-    private String getHostUrl() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        return sharedPref.getString(getResources().getString(R.string.pref_host_uri_key),
-                getResources().getString(R.string.pref_host_uri_default));
-    }
-
     public void getCapabilities() {
         VolleyHelper.getInstance(getActivity().getApplicationContext())
-                .addToRequestQueue(new GsonRequest<>(getCapabiltiesUrl(), AlarmClockCapabilities.class, null, new Response.Listener<AlarmClockCapabilities>() {
+                .addToRequestQueue(new GsonRequest<>(new RestHelper(getActivity()).getCapabiltiesUrl(), AlarmClockCapabilities.class, null, new Response.Listener<AlarmClockCapabilities>() {
                     @Override
                     public void onResponse(AlarmClockCapabilities response) {
                         if (response.isStreamAudio()) {
@@ -85,10 +75,6 @@ public class AlarmCapabilitiesFragment extends ListFragment {
 
                     }
                 }));
-    }
-
-    private String getCapabiltiesUrl() {
-        return getHostUrl() + getResources().getString(R.string.get_capabilties);
     }
 
     private void addTuple(String key, String value) {

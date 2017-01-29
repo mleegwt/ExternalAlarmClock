@@ -1,12 +1,12 @@
 package com.externalalarmclock.pojo;
 
-import java.time.ZonedDateTime;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Date;
 
 public class ExternalAlarm {
 	@JsonProperty
-	private ZonedDateTime alarmTime;
+	private Date alarmTime;
 	@JsonProperty
 	private boolean vibrate;
 	@JsonProperty
@@ -15,12 +15,14 @@ public class ExternalAlarm {
 	private String ringTone;
 	@JsonProperty
 	private String audioStream;
+	@JsonProperty
+	private String message;
 
-	public ZonedDateTime getAlarmTime() {
+	public Date getAlarmTime() {
 		return alarmTime;
 	}
 
-	public void setAlarmTime(ZonedDateTime alarmTime) {
+	public void setAlarmTime(Date alarmTime) {
 		this.alarmTime = alarmTime;
 	}
 
@@ -54,5 +56,13 @@ public class ExternalAlarm {
 
 	public void setAudioStream(String audioStream) {
 		this.audioStream = audioStream;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 }
