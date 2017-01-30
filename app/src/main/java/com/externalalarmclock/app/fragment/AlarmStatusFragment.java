@@ -1,9 +1,11 @@
-package com.externalalarmclock.externalalarmclock;
+package com.externalalarmclock.app.fragment;
 
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+
+import com.externalalarmclock.app.util.AlarmClockHelper;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;

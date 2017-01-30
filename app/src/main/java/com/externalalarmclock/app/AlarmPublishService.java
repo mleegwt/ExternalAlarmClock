@@ -1,4 +1,4 @@
-package com.externalalarmclock.externalalarmclock;
+package com.externalalarmclock.app;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -12,6 +12,11 @@ import android.support.v4.app.NotificationCompat;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.externalalarmclock.app.activity.MainActivity;
+import com.externalalarmclock.app.util.AlarmClockHelper;
+import com.externalalarmclock.app.util.GsonRequest;
+import com.externalalarmclock.app.util.RestHelper;
+import com.externalalarmclock.app.util.VolleyHelper;
 import com.externalalarmclock.pojo.ExternalAlarm;
 
 /**

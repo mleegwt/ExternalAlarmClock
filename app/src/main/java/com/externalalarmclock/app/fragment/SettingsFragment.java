@@ -1,7 +1,9 @@
-package com.externalalarmclock.externalalarmclock;
+package com.externalalarmclock.app.fragment;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+
+import com.externalalarmclock.app.R;
 
 /**
  * The settings fragment.

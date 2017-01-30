@@ -1,9 +1,11 @@
-package com.externalalarmclock.externalalarmclock;
+package com.externalalarmclock.app.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+
+import com.externalalarmclock.app.R;
 
 /**
  * Created by michiel on 28-1-17.
