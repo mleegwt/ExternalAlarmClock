@@ -2,11 +2,11 @@ package com.externalalarmclock.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class ExternalAlarm {
 	@JsonProperty
-	private Date alarmTime;
+	private DateTime alarmTime;
 	@JsonProperty
 	private boolean vibrate;
 	@JsonProperty
@@ -18,11 +18,11 @@ public class ExternalAlarm {
 	@JsonProperty
 	private String message;
 
-	public Date getAlarmTime() {
+	public DateTime getAlarmTime() {
 		return alarmTime;
 	}
 
-	public void setAlarmTime(Date alarmTime) {
+	public void setAlarmTime(DateTime alarmTime) {
 		this.alarmTime = alarmTime;
 	}
 

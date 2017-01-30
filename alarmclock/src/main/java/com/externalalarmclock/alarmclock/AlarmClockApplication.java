@@ -20,7 +20,8 @@ public class AlarmClockApplication extends Application<AlarmClockConfiguration> 
 
     @Override
     public void initialize(Bootstrap<AlarmClockConfiguration> bootstrap) {
-        // nothing to do yet
+        bootstrap.getObjectMapper().disable(
+                com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS);
     }
 
     @Override
