@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "com.externalalarmclock.test.Main"
+
+project.ext {
+    configPath = "$project.projectDir/src/dist/conf/"
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+	compile 'net.java.dev.jna:jna:4.1.0'
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+// UTF-8 should be standard by now. So use it!
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
