@@ -1,65 +1,56 @@
 package com.externalalarmclock.test;
 
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import com.externalalarmclock.lib.rpiws281x.ERpiWs281xStripType;
+import com.externalalarmclock.lib.rpiws281x.RpiWs281x;
+import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel;
 import com.externalalarmclock.rpiws281x.RpiWs281xLibrary;
-import com.externalalarmclock.rpiws281x.ws2811_channel_t;
-import com.externalalarmclock.rpiws281x.ws2811_t;
-import com.sun.jna.Native;
 
 public class Main {
 
 	public static void main(String[] args) {
-		int length = 64;
+		RpiWs281x dev = new RpiWs281x(RpiWs281xLibrary.INSTANCE);
 
-		RpiWs281xLibrary lib = RpiWs281xLibrary.INSTANCE;
-		ws2811_t strip = new ws2811_t();
-		strip.channel = new ws2811_channel_t[2];
-		strip.dmanum = 5;
-		strip.freq = RpiWs281xLibrary.WS2811_TARGET_FREQ;
+		RpiWs281xChannel channel = new RpiWs281xChannel();
+		channel.setBrightness((byte) 255);
+		channel.setGpioNum(18);
+		int ledCount = 64;
+		channel.setLedCount(ledCount);
+		channel.setStripType(ERpiWs281xStripType.SK6812_STRIP_GRBW);
 
-		ws2811_channel_t first = new ws2811_channel_t();
-		first.strip_type = RpiWs281xLibrary.SK6812_STRIP_GRBW;
-		first.brightness = (byte) 255;
-		first.count = length;
-		first.gpionum = 18;
+		dev.init(5, RpiWs281xLibrary.WS2811_TARGET_FREQ, channel);
 
-		strip.channel[0] = first;
+		Map<RpiWs281xChannel, List<Color>> pixels = getPixels(channel, ledCount);
+		
+		dev.render(pixels);
+		dev.fini();
+	}
 
-		ws2811_channel_t second = new ws2811_channel_t();
-		strip.channel[1] = second;
-
-		int ret = lib.ws2811_init(strip);
-		if (ret != RpiWs281xLibrary.ws2811_return_t.WS2811_SUCCESS) {
-			throw new IllegalStateException("Failed to start strip due to " + lib.ws2811_get_return_t_str(ret));
-		}
-
-		int intSize = Native.getNativeSize(int.class);
-		for (int i = 0; i < length * intSize; i += intSize) {
-			first.leds.getPointer().getByteBuffer(i, intSize).asIntBuffer().put(getColor(i / 4).getRGB());
-		}
-
-		ret = lib.ws2811_render(strip);
-		if (ret != RpiWs281xLibrary.ws2811_return_t.WS2811_SUCCESS) {
-			throw new IllegalStateException("Failed to render strip due to " + lib.ws2811_get_return_t_str(ret));
-		}
-		lib.ws2811_wait(strip);
-		if (ret != RpiWs281xLibrary.ws2811_return_t.WS2811_SUCCESS) {
-			throw new IllegalStateException("Failed to end rendering strip due to " + lib.ws2811_get_return_t_str(ret));
-		}
-		lib.ws2811_fini(strip);
+	private static Map<RpiWs281xChannel, List<Color>> getPixels(RpiWs281xChannel channel, int ledCount) {
+		List<Color> pixelsList = IntStream.range(0, ledCount).mapToObj(Main::getColor).collect(Collectors.toList());
+		Map<RpiWs281xChannel, List<Color>> pixels = new HashMap<>();
+		pixels.put(channel, pixelsList);
+		return pixels;
 	}
 
 	private static Color getColor(int pixel) {
-		switch (pixel % 4) {
+		switch (pixel % 5) {
 		case 0:
 			return new Color(0x00FF0000, true);
 		case 1:
 			return new Color(0x0000FF00, true);
 		case 2:
 			return new Color(0x000000FF, true);
-		default:
+		case 3:
 			return new Color(0xFF000000, true);
+		default:
+			return new Color(0x00000000, true);
 		}
 	}
 

@@ -1,1 +1,1 @@
-include ':app', ':lib.externalalarmclock', ':alarmclock', ':test'
+include ':app', ':lib.externalalarmclock', ':lib.rpiws281x', ':alarmclock', ':test'
