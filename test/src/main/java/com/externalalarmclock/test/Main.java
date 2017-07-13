@@ -13,16 +13,21 @@ import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel;
 import com.externalalarmclock.rpiws281x.RpiWs281xLibrary;
 
 public class Main {
+	private boolean clear;
+	
+	public Main(boolean clear) {
+		this.clear = clear;
+	}
 
 	public static void main(String[] args) {
-		RpiWs281x dev = new RpiWs281x(RpiWs281xLibrary.INSTANCE);
+		new Main(true).showStableLeds();
+	}
 
-		RpiWs281xChannel channel = new RpiWs281xChannel();
-		channel.setBrightness((byte) 255);
-		channel.setGpioNum(18);
+	public void showStableLeds() {
+		RpiWs281x dev = new RpiWs281x(RpiWs281xLibrary.INSTANCE);
 		int ledCount = 64;
-		channel.setLedCount(ledCount);
-		channel.setStripType(ERpiWs281xStripType.SK6812_STRIP_GRBW);
+
+		RpiWs281xChannel channel = getChannel(ledCount);
 
 		dev.init(5, RpiWs281xLibrary.WS2811_TARGET_FREQ, channel);
 
@@ -32,15 +37,24 @@ public class Main {
 		dev.fini();
 	}
 
-	private static Map<RpiWs281xChannel, List<Color>> getPixels(RpiWs281xChannel channel, int ledCount) {
-		List<Color> pixelsList = IntStream.range(0, ledCount).mapToObj(Main::getColor).collect(Collectors.toList());
+	private RpiWs281xChannel getChannel(int ledCount) {
+		RpiWs281xChannel channel = new RpiWs281xChannel();
+		channel.setBrightness((byte) 255);
+		channel.setGpioNum(18);
+		channel.setLedCount(ledCount);
+		channel.setStripType(ERpiWs281xStripType.SK6812_STRIP_GRBW);
+		return channel;
+	}
+
+	private Map<RpiWs281xChannel, List<Color>> getPixels(RpiWs281xChannel channel, int ledCount) {
+		List<Color> pixelsList = IntStream.range(0, ledCount).mapToObj(this::getColor).collect(Collectors.toList());
 		Map<RpiWs281xChannel, List<Color>> pixels = new HashMap<>();
 		pixels.put(channel, pixelsList);
 		return pixels;
 	}
 
-	private static Color getColor(int pixel) {
-		switch (pixel % 5) {
+	private Color getColor(int pixel) {
+		switch ((clear ? 4 : pixel) % 5) {
 		case 0:
 			return new Color(0x00FF0000, true);
 		case 1:
