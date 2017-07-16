@@ -1,15 +1,22 @@
 package com.externalalarmclock.alarmclock;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.ImmutableMap;
-import io.dropwizard.Configuration;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.validation.constraints.NotNull;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
-public final class AlarmClockConfiguration extends Configuration {
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.ImmutableMap;
+
+import de.spinscale.dropwizard.jobs.JobConfiguration;
+import io.dropwizard.Configuration;
+
+public final class AlarmClockConfiguration extends Configuration implements JobConfiguration {
     @NotEmpty
     private String template;
 
@@ -18,6 +25,11 @@ public final class AlarmClockConfiguration extends Configuration {
 
     @NotNull
     private Map<String, Map<String, String>> viewRendererConfiguration = Collections.emptyMap();
+
+    @JsonProperty
+    @NotNull
+    @Valid
+    private List<RpiWs281xChannel> channels = Collections.emptyList();
 
     @JsonProperty
     public String getTemplate() {
@@ -52,4 +64,14 @@ public final class AlarmClockConfiguration extends Configuration {
         }
         this.viewRendererConfiguration = builder.build();
     }
+
+    @JsonProperty
+	public List<RpiWs281xChannel> getChannels() {
+    	return channels;
+	}
+
+    @JsonProperty
+	public void setChannels(List<RpiWs281xChannel> channels) {
+    	this.channels = channels;
+	}
 }

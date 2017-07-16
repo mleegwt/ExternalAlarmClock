@@ -16,6 +16,7 @@ dependencies {
     compile 'io.dropwizard:dropwizard-core:1.0.5'
     compile project(':lib.externalalarmclock')
 	compile project(':test')
+	compile 'de.spinscale.dropwizard:dropwizard-jobs-core:3.0.0'
 }
 
 repositories {
