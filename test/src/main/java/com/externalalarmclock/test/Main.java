@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -20,37 +21,41 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		new Main(true).showStableLeds();
+		Main main = new Main(true);
+		main.showStableLeds(main::getPixelList);
 	}
 
-	public void showStableLeds() {
+	public void showStableLeds(Function<RpiWs281xChannel, List<Color>> pixelSupplier) {
 		RpiWs281x dev = new RpiWs281x(RpiWs281xLibrary.INSTANCE);
-		int ledCount = 64;
 
-		RpiWs281xChannel channel = getChannel(ledCount);
+		RpiWs281xChannel channel = getChannel();
 
 		dev.init(5, RpiWs281xLibrary.WS2811_TARGET_FREQ, channel);
 
-		Map<RpiWs281xChannel, List<Color>> pixels = getPixels(channel, ledCount);
+		Map<RpiWs281xChannel, List<Color>> pixels = getPixels(channel, clear ? this::getPixelList : pixelSupplier);
 		
 		dev.render(pixels);
 		dev.fini();
 	}
 
-	private RpiWs281xChannel getChannel(int ledCount) {
+	private RpiWs281xChannel getChannel() {
 		RpiWs281xChannel channel = new RpiWs281xChannel();
 		channel.setBrightness((byte) 255);
 		channel.setGpioNum(18);
-		channel.setLedCount(ledCount);
+		channel.setLedCount(300);
 		channel.setStripType(ERpiWs281xStripType.SK6812_STRIP_GRBW);
 		return channel;
 	}
 
-	private Map<RpiWs281xChannel, List<Color>> getPixels(RpiWs281xChannel channel, int ledCount) {
-		List<Color> pixelsList = IntStream.range(0, ledCount).mapToObj(this::getColor).collect(Collectors.toList());
+	private Map<RpiWs281xChannel, List<Color>> getPixels(RpiWs281xChannel channel, Function<RpiWs281xChannel, List<Color>> pixelSupplier) {
+		List<Color> pixelsList = pixelSupplier.apply(channel);
 		Map<RpiWs281xChannel, List<Color>> pixels = new HashMap<>();
 		pixels.put(channel, pixelsList);
 		return pixels;
+	}
+
+	private List<Color> getPixelList(RpiWs281xChannel channel) {
+		return IntStream.range(0, channel.getLedCount()).mapToObj(this::getColor).collect(Collectors.toList());
 	}
 
 	private Color getColor(int pixel) {
