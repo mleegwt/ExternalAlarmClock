@@ -42,6 +42,9 @@ public class UpdateLedsJob extends Job {
 	private AlarmStore alarmStore;
 	private Logger logger;
 	private Path dir;
+	private InputStream stream;
+	private ImageConverter converter;
+	private int frameCount = -1;
 
 	public UpdateLedsJob(Logger logger, AlarmStore alarmStore) {
 		this.logger = logger;
@@ -62,7 +65,11 @@ public class UpdateLedsJob extends Job {
 			createPixelsForChannel(pixels, channel);
 		}
 
-//		writePixelsFile(pixels);
+		if (pixels.isEmpty()) {
+			return;
+		}
+		
+		writePixelsFile(pixels);
 		device.render(pixels);
 	}
 
@@ -90,22 +97,29 @@ public class UpdateLedsJob extends Job {
 		ZonedDateTime end = alarmStore.getNextAlarm(channel);
 		ZonedDateTime start = end == null ? null : end.minusMinutes(30);
 
-		if (start == null || now.isBefore(start)) {
+		if (start == null || now.isBefore(start) || now.isAfter(end)) {
 			pixels.put(channel, getOffPixelList(channel));
 			logger.debug("Before alarm start {}-{}", start, end);
+			converter = null;
+			frameCount = -1;
 		} else if (now.isAfter(start) && now.isBefore(end)) {
-			Rectangle r = new Rectangle(0, 0, 32, 18);
-			InputStream resourceStream = SetNextAlarmResource.class.getResourceAsStream("/sunup.gif");
-			ImageConverter converter = new ImageConverter(r, false, EStartCorner.BOTTOM_RIGHT, resourceStream);
-			converter.init();
+			if (converter == null) {
+				Rectangle r = new Rectangle(0, 0, 32, 18);
+				InputStream resourceStream = SetNextAlarmResource.class.getResourceAsStream("/sunup.gif");
+				converter = new ImageConverter(r, false, EStartCorner.BOTTOM_RIGHT, resourceStream);
+				converter.init();
+			}
 
-			Duration afterStart = Duration.between(start, now);
-			Duration totalDuration = Duration.between(start, end);
+			Duration afterStart = Duration.between(now, start);
+			Duration totalDuration = Duration.between(end, start);
 			int frame = (int) (converter.getFrames() * afterStart.toNanos() / totalDuration.toNanos());
-			pixels.put(channel, converter.getBorderPixels(frame, channel));
-			logger.debug("During wakeup light {}-{}, frame {}", start, end, frame);
+			
+			if (frame != frameCount) {
+				pixels.put(channel, converter.getBorderPixels(frame, channel));
+				logger.info("During wakeup light {}-{}, frame {}", start, end, frame);
+				frameCount = frame;
+			}
 		}
-
 	}
 
 	public void setDevice(RpiWs281x device) {
