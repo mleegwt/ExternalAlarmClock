@@ -2,16 +2,9 @@ package com.externalalarmclock.alarmclock.job;
 
 import java.awt.Color;
 import java.awt.Rectangle;
-import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Duration;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +22,6 @@ import com.externalalarmclock.lib.rpiws281x.RpiWs281x;
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel;
 import com.externalalarmclock.lib.rpiws281x.image.EStartCorner;
 import com.externalalarmclock.lib.rpiws281x.image.ImageConverter;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.spinscale.dropwizard.jobs.Job;
 import de.spinscale.dropwizard.jobs.annotations.DelayStart;
@@ -41,19 +33,12 @@ public class UpdateLedsJob extends Job {
 	private RpiWs281x device;
 	private AlarmStore alarmStore;
 	private Logger logger;
-	private Path dir;
-	private InputStream stream;
 	private ImageConverter converter;
 	private int frameCount = -1;
 
 	public UpdateLedsJob(Logger logger, AlarmStore alarmStore) {
 		this.logger = logger;
 		this.alarmStore = alarmStore;
-		try {
-			dir = Files.createTempDirectory("alarm");
-		} catch (IOException e) {
-			throw new IllegalStateException(e);
-		}
 	}
 
 	@Override
@@ -69,27 +54,7 @@ public class UpdateLedsJob extends Job {
 			return;
 		}
 		
-		writePixelsFile(pixels);
 		device.render(pixels);
-	}
-
-	private void writePixelsFile(Map<RpiWs281xChannel, List<Color>> pixels) {
-		Path path = dir.resolve(ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"))
-				.format(DateTimeFormatter.ISO_DATE_TIME).replaceAll(":", "") + ".json");
-		try {
-			Path p = Files.createFile(path);
-			BufferedWriter w = Files.newBufferedWriter(p, Charset.forName("UTF8"));
-
-			ObjectMapper m = new ObjectMapper();
-			List<Color> values = pixels.values().stream().flatMap((l) -> l.stream()).collect(Collectors.toList());
-			w.write(m.writeValueAsString(
-					values.stream().map(Color::getRGB).map(Integer::toHexString).collect(Collectors.toList())));
-			w.flush();
-			w.close();
-		} catch (IOException e) {
-			throw new IllegalStateException(e);
-		}
-
 	}
 
 	private void createPixelsForChannel(Map<RpiWs281xChannel, List<Color>> pixels, RpiWs281xChannel channel) {
@@ -98,7 +63,9 @@ public class UpdateLedsJob extends Job {
 		ZonedDateTime start = end == null ? null : end.minusMinutes(30);
 
 		if (start == null || now.isBefore(start) || now.isAfter(end)) {
-			pixels.put(channel, getOffPixelList(channel));
+			if (frameCount != -1) {
+				pixels.put(channel, getOffPixelList(channel));
+			}
 			logger.debug("Before alarm start {}-{}", start, end);
 			converter = null;
 			frameCount = -1;
