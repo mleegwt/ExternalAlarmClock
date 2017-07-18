@@ -39,7 +39,7 @@ public class ImageConverter {
 	}
 
 	public List<Color> getBorderPixels(int frame, RpiWs281xChannel channel) {
-		BufferedImage image = decoder.getFrame(decoder.getFrameCount() -1);
+		BufferedImage image = decoder.getFrame(frame);
 
 		Rectangle2D bounds = destination.getBounds2D();
 		int width = (int) bounds.getWidth();
