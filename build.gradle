@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.github.rholder:gradle-one-jar:1.0.4'
         classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.2'
  
@@ -36,7 +36,7 @@ configure(javaProjects()) {
     }
 
     pitest {
-        //targetClasses = ['com.*']  //by default "${project.group}.*"
+        targetClasses = ['com.*']
         pitestVersion = "1.2.4" //not needed when a default PIT version should be used
         threads = 4
         outputFormats = ['XML', 'HTML']
