@@ -35,6 +35,7 @@ public class UpdateLedsJob extends Job {
 	private Logger logger;
 	private ImageConverter converter;
 	private int frameCount = -1;
+	private int frame;
 
 	public UpdateLedsJob(Logger logger, AlarmStore alarmStore) {
 		this.logger = logger;
@@ -69,6 +70,7 @@ public class UpdateLedsJob extends Job {
 			logger.debug("Before alarm start {}-{}", start, end);
 			converter = null;
 			frameCount = -1;
+			frame = 0;
 		} else if (now.isAfter(start) && now.isBefore(end)) {
 			if (converter == null) {
 				Rectangle r = new Rectangle(0, 0, 32, 18);
@@ -79,7 +81,7 @@ public class UpdateLedsJob extends Job {
 
 			Duration afterStart = Duration.between(now, start);
 			Duration totalDuration = Duration.between(end, start);
-			int frame = (int) (converter.getFrames() * afterStart.toNanos() / totalDuration.toNanos());
+			frame = (int) (converter.getFrames() * afterStart.toNanos() / totalDuration.toNanos());
 			
 			if (frame != frameCount) {
 				pixels.put(channel, converter.getBorderPixels(frame, channel));
@@ -99,5 +101,9 @@ public class UpdateLedsJob extends Job {
 
 	private Color getNoColor(int index) {
 		return new Color(0x00000000, true);
+	}
+
+	public int getFrame() {
+		return frame;
 	}
 }
