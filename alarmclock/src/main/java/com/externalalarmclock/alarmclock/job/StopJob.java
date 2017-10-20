@@ -4,7 +4,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 
-import com.externalalarmclock.lib.rpiws281x.RpiWs281x;
+import com.externalalarmclock.lib.rpiws281x.IRpiWs281x;
 
 import de.spinscale.dropwizard.jobs.Job;
 import de.spinscale.dropwizard.jobs.annotations.OnApplicationStop;
@@ -12,7 +12,7 @@ import de.spinscale.dropwizard.jobs.annotations.OnApplicationStop;
 @OnApplicationStop
 public class StopJob extends Job {
 	private Logger logger;
-	private RpiWs281x device;
+	private IRpiWs281x device;
 
 	public StopJob(Logger logger) {
 		this.logger = logger;
@@ -23,7 +23,7 @@ public class StopJob extends Job {
 		device.fini();
 	}
 
-	public void setDevice(RpiWs281x device) {
+	public void setDevice(IRpiWs281x device) {
 		this.device = device;
 	}
 }

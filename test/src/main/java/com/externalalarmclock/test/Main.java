@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.externalalarmclock.lib.rpiws281x.ERpiWs281xStripType;
+import com.externalalarmclock.lib.rpiws281x.IRpiWs281x;
 import com.externalalarmclock.lib.rpiws281x.RpiWs281x;
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel;
 import com.externalalarmclock.rpiws281x.RpiWs281xLibrary;
@@ -26,7 +27,7 @@ public class Main {
 	}
 
 	public void showStableLeds(Function<RpiWs281xChannel, List<Color>> pixelSupplier) {
-		RpiWs281x dev = new RpiWs281x(RpiWs281xLibrary.INSTANCE);
+		IRpiWs281x dev = new RpiWs281x(RpiWs281xLibrary.INSTANCE);
 
 		RpiWs281xChannel channel = getChannel();
 

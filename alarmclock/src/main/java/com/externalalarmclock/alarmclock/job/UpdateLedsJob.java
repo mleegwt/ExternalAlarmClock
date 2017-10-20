@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 
 import com.externalalarmclock.alarmclock.AlarmStore;
 import com.externalalarmclock.alarmclock.resources.SetNextAlarmResource;
-import com.externalalarmclock.lib.rpiws281x.RpiWs281x;
+import com.externalalarmclock.lib.rpiws281x.IRpiWs281x;
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel;
 import com.externalalarmclock.lib.rpiws281x.image.EStartCorner;
 import com.externalalarmclock.lib.rpiws281x.image.ImageConverter;
@@ -30,7 +30,7 @@ import de.spinscale.dropwizard.jobs.annotations.Every;
 @DelayStart("5s")
 @Every("1s")
 public class UpdateLedsJob extends Job {
-	private RpiWs281x device;
+	private IRpiWs281x device;
 	private AlarmStore alarmStore;
 	private Logger logger;
 	private ImageConverter converter;
@@ -89,7 +89,7 @@ public class UpdateLedsJob extends Job {
 		}
 	}
 
-	public void setDevice(RpiWs281x device) {
+	public void setDevice(IRpiWs281x device) {
 		this.device = device;
 	}
 
