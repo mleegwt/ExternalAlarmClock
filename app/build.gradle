@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+sonarqube {
+        skipProject = true
+    }
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
