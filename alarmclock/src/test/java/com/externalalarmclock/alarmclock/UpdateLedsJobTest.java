@@ -31,8 +31,10 @@ public class UpdateLedsJobTest {
 		sut.setDevice(device);
 
 		channel.setLedCount(LED_COUNT);
-		
-		Mockito.when(device.getChannels()).thenReturn(Arrays.asList(channel));
+
+		List<RpiWs281xChannel> channels = Arrays.asList(channel);
+		alarmStore.addChannels(channels);
+		Mockito.when(device.getChannels()).thenReturn(channels);
 	}
 
 	@Test

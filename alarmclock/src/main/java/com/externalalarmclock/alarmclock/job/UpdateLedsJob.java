@@ -96,10 +96,10 @@ public class UpdateLedsJob extends Job {
 	}
 
 	private List<Color> getOffPixelList(RpiWs281xChannel channel) {
-		return IntStream.range(0, channel.getLedCount()).mapToObj(this::getNoColor).collect(Collectors.toList());
+		return IntStream.range(0, channel.getLedCount()).mapToObj(i -> this.getNoColor()).collect(Collectors.toList());
 	}
 
-	private Color getNoColor(int index) {
+	private Color getNoColor() {
 		return new Color(0x00000000, true);
 	}
 

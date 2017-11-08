@@ -45,12 +45,14 @@ public class AlarmClockApplication extends Application<AlarmClockConfiguration> 
     @Override
     public void run(AlarmClockConfiguration configuration,
                     Environment environment) {
-    	environment.healthChecks().register("alarmclock", new AlarmClockHealthCheck());
+        IRpiWs281x device = new RpiWs281x(RpiWs281xLibrary.INSTANCE);
+        device.init(5, RpiWs281xLibrary.WS2811_TARGET_FREQ, configuration.getChannels().toArray(new RpiWs281xChannel[0]));
+
+        environment.healthChecks().register("alarmclock", new AlarmClockHealthCheck());
         environment.jersey().register(CapabilitiesResource.class);
         environment.jersey().register(new SetNextAlarmResource(alarmStore));
         
-        IRpiWs281x device = new RpiWs281x(RpiWs281xLibrary.INSTANCE);
-        device.init(5, RpiWs281xLibrary.WS2811_TARGET_FREQ, configuration.getChannels().toArray(new RpiWs281xChannel[0]));
+        alarmStore.addChannels(device.getChannels());
         updateLeds.setDevice(device);
         stopJob.setDevice(device);
     }
