@@ -19,6 +19,8 @@ public class ImageConverter {
 	private InputStream imageSource;
 	private boolean includeCorners;
 	private EStartCorner startCorner;
+	private int width;
+	private int height;
 
 	public ImageConverter(Rectangle destination, boolean includeCorners, EStartCorner startCorner,
 			InputStream imageSource) {
@@ -33,7 +35,7 @@ public class ImageConverter {
 	public boolean init() {
 		return decoder.read(imageSource) == 0;
 	}
-	
+
 	public int getFrames() {
 		return decoder.getFrameCount();
 	}
@@ -42,44 +44,71 @@ public class ImageConverter {
 		BufferedImage image = decoder.getFrame(frame);
 
 		Rectangle2D bounds = destination.getBounds2D();
-		int width = (int) bounds.getWidth();
-		int height = (int) bounds.getHeight();
+		width = (int) bounds.getWidth();
+		height = (int) bounds.getHeight();
 
-		BufferedImage scaled = getScaledImage(image, width, height);
+		BufferedImage scaled = getScaledImage(image);
 
 		List<Color> top = new ArrayList<>();
 		List<Color> bottom = new ArrayList<>();
 		List<Color> left = new ArrayList<>();
 		List<Color> right = new ArrayList<>();
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				Color color = null;
-				if ((x == 0 || x == width - 1) && (y == 0 || y == height - 1)) {
-					if (includeCorners) {
-						color = new Color(scaled.getRGB(x, y) & 0x00FFFFFF, true);
-					}
-				} else {
-					color = new Color(scaled.getRGB(x, y) & 0x00FFFFFF, true);
-				}
-
-				if (color == null) {
-					continue;
-				} else if (y == 0) {
-					top.add(color);
-				} else if (y == height - 1) {
-					bottom.add(color);
-				} else if (x == 0) {
-					left.add(color);
-				} else if (x == width - 1) {
-					right.add(color);
-				}
-			}
-		}
+		getImageBorders(scaled, top, bottom, left, right);
 
 		// Assuming clockwise
 		Collections.reverse(left);
 		Collections.reverse(bottom);
 
+		List<Color> result = createLedStripContents(top, bottom, left, right);
+
+		while (result.size() < channel.getLedCount()) {
+			result.add(new Color(0x00000000, true));
+		}
+		return result;
+	}
+
+	private void getImageBorders(BufferedImage scaled, List<Color> top, List<Color> bottom, List<Color> left,
+			List<Color> right) {
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				Color color = getPixelColor(scaled, x, y);
+
+				if (color == null) {
+					continue;
+				}
+
+				addColorToBorder(top, bottom, left, right, x, y, color);
+			}
+		}
+	}
+
+	private void addColorToBorder(List<Color> top, List<Color> bottom, List<Color> left, List<Color> right, int x,
+			int y, Color color) {
+		if (y == 0) {
+			top.add(color);
+		} else if (y == height - 1) {
+			bottom.add(color);
+		} else if (x == 0) {
+			left.add(color);
+		} else if (x == width - 1) {
+			right.add(color);
+		}
+	}
+
+	private Color getPixelColor(BufferedImage scaled, int x, int y) {
+		Color color = null;
+		if ((x == 0 || x == width - 1) && (y == 0 || y == height - 1)) {
+			if (includeCorners) {
+				color = new Color(scaled.getRGB(x, y) & 0x00FFFFFF, true);
+			}
+		} else {
+			color = new Color(scaled.getRGB(x, y) & 0x00FFFFFF, true);
+		}
+		return color;
+	}
+
+	private List<Color> createLedStripContents(List<Color> top, List<Color> bottom, List<Color> left,
+			List<Color> right) {
 		List<Color> result = new ArrayList<>();
 		switch (startCorner) {
 		case BOTTOM_LEFT:
@@ -109,23 +138,17 @@ public class ImageConverter {
 		default:
 			throw new IllegalArgumentException("Unexpected start corder " + startCorner);
 		}
-
-		while (result.size() < channel.getLedCount()) {
-			result.add(new Color(0x00000000, true));
-		}
 		return result;
 	}
 
-
 	// Poor man solution, no need for X environment.
-	private BufferedImage getScaledImage(BufferedImage src, int w, int h) {
-		BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-		int x, y;
+	private BufferedImage getScaledImage(BufferedImage src) {
+		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		int ww = src.getWidth();
 		int hh = src.getHeight();
-		for (x = 0; x < w; x++) {
-			for (y = 0; y < h; y++) {
-				int col = src.getRGB(x * ww / w, y * hh / h);
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				int col = src.getRGB(x * ww / width, y * hh / height);
 				img.setRGB(x, y, col & 0x00FFFFFF);
 			}
 		}
