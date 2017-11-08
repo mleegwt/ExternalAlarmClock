@@ -20,7 +20,9 @@ public class StopJob extends Job {
 
 	@Override
 	public void doJob(JobExecutionContext context) throws JobExecutionException {
+		logger.debug("Stopping application");
 		device.fini();
+		logger.info("Alarmclock has stopped");
 	}
 
 	public void setDevice(IRpiWs281x device) {
