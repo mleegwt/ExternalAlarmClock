@@ -30,6 +30,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class StoreAttachmentsTest {
@@ -43,6 +44,7 @@ public class StoreAttachmentsTest {
 				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.178.31"), 9300));
 	}
 
+	@Ignore("Output ZIP is corrupt")
 	@Test
 	public void testSearchAttachments() throws IOException, FileUploadException {
 		String queryString = getQueryString();
