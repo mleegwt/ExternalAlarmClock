@@ -3,6 +3,7 @@ package com.externalalarmclock.alarmclock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.externalalarmclock.alarmclock.config.AlarmClockConfiguration;
 import com.externalalarmclock.alarmclock.healthchecks.AlarmClockHealthCheck;
 import com.externalalarmclock.alarmclock.job.StopJob;
 import com.externalalarmclock.alarmclock.job.UpdateLedsJob;

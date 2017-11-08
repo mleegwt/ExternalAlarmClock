@@ -1,4 +1,4 @@
-package com.externalalarmclock.alarmclock;
+package com.externalalarmclock.alarmclock.config;
 
 import java.util.Collections;
 import java.util.List;
