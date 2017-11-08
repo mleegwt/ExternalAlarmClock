@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeName("channel")
 public class ChannelFactory implements IChannelFactory {
     @JsonProperty
-	private int ledCount;
+	private int ledCount = -1;
     @JsonProperty
-	private int gpioNum;
+	private int gpioNum = -1;
     @JsonProperty
-	private byte brightness;
+	private byte brightness = (byte) 0xFF;
     @JsonProperty
-	private ERpiWs281xStripType stripType;
+	private ERpiWs281xStripType stripType = ERpiWs281xStripType.SK6812_STRIP_GRBW;
 
 	@Override
 	public RpiWs281xChannel createChannel() {

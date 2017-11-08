@@ -1,4 +1,4 @@
-package com.externalalarmclock.alarmclock;
+package com.externalalarmclock.alarmclock.job;
 
 import java.awt.Color;
 import java.time.Duration;
@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.quartz.JobExecutionException;
 import org.slf4j.LoggerFactory;
 
+import com.externalalarmclock.alarmclock.AlarmStore;
 import com.externalalarmclock.alarmclock.job.UpdateLedsJob;
 import com.externalalarmclock.lib.rpiws281x.IRpiWs281x;
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel;

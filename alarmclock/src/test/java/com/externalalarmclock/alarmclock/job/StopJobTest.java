@@ -1,4 +1,4 @@
-package com.externalalarmclock.alarmclock;
+package com.externalalarmclock.alarmclock.job;
 
 import org.junit.Before;
 import org.junit.Test;
