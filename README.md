@@ -1,7 +1,7 @@
 # ExternalAlarmClock
 
 
-[![Known Vulnerabilities](https://snyk.io/test/github/mleegwt/ExternalAlarmClock.git/badge.svg)](https://snyk.io/test/github/mleegwt/ExternalAlarmClock.git)
+[![Known Vulnerabilities](https://snyk.io/test/github/mleegwt/ExternalAlarmClock.git/badge.svg)](https://snyk.io/test/github/mleegwt/ExternalAlarmClock.git) [![Build Status](https://travis-ci.org/mleegwt/ExternalAlarmClock.svg?branch=master)](https://travis-ci.org/mleegwt/ExternalAlarmClock)
 
 This project contains a chain of programs that should ultimately result in a usable replacement for my wakeup light.
 
