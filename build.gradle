@@ -7,9 +7,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.github.rholder:gradle-one-jar:1.0.4'
-        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.2'
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.3.0'
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5"
- 
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.20.0" 
         //Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -48,7 +48,7 @@ configure(javaProjects()) {
 
     pitest {
         targetClasses = ['com.*']
-        pitestVersion = "1.2.4" //not needed when a default PIT version should be used
+        pitestVersion = "1.4.3" //not needed when a default PIT version should be used
         threads = 4
         outputFormats = ['XML', 'HTML']
         failWhenNoMutations = false
@@ -56,8 +56,8 @@ configure(javaProjects()) {
 
     dependencies {
         testCompile 'junit:junit:4.12'
-	testCompile 'com.openpojo:openpojo:0.8.6'
-        testCompile group: 'org.mockito', name: 'mockito-core', version: '2.11.0'
+	testCompile 'com.openpojo:openpojo:0.8.10'
+        testCompile group: 'org.mockito', name: 'mockito-core', version: '2.23.0'
     }
 }
 
@@ -74,4 +74,18 @@ def appProjects() {
 }
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+apply plugin: "com.github.ben-manes.versions"
+dependencyUpdates.resolutionStrategy {
+  componentSelection { rules ->
+    rules.all { ComponentSelection selection ->
+      boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'preview'].any { qualifier ->
+        selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+      }
+      if (rejected) {
+        selection.reject('Release candidate')
+      }
+    }
+  }
 }
