@@ -1,5 +1,8 @@
 # ExternalAlarmClock
 
+
+[![Known Vulnerabilities](https://snyk.io/test/github/mleegwt/ExternalAlarmClock.git/badge.svg)](https://snyk.io/test/github/mleegwt/ExternalAlarmClock.git)
+
 This project contains a chain of programs that should ultimately result in a usable replacement for my wakeup light.
 
 The replacement uses:
