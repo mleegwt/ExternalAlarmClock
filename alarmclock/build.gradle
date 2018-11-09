@@ -1,8 +1,9 @@
 apply plugin: 'java'
+apply plugin: 'kotlin'
 apply plugin: 'gradle-one-jar'
 apply plugin: 'application'
 
-mainClassName = "com.externalalarmclock.alarmclock.AlarmClockApplication"
+mainClassName = "com.externalalarmclock.alarmclock.AlarmClockApplicationKt"
 
 project.ext {
     configPath = "$project.projectDir/src/dist/conf/"
@@ -15,8 +16,9 @@ run {
 dependencies {
     compile 'io.dropwizard:dropwizard-core:1.3.7'
     compile project(':lib.externalalarmclock')
-	compile project(':test')
-	compile 'de.spinscale.dropwizard:dropwizard-jobs-core:3.0.0'
+    compile project(':test')
+    compile 'de.spinscale.dropwizard:dropwizard-jobs-core:3.0.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 repositories {
