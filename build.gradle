@@ -99,4 +99,7 @@ dependencyUpdates.resolutionStrategy {
 check.dependsOn dependencyUpdates
 check.dependsOn dependencyCheckAggregate
 check.dependsOn cobertura
-check.dependsOn coveralls
+
+tasks.coveralls {
+  dependsOn 'check'
+}
