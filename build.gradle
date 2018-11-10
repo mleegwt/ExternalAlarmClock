@@ -12,6 +12,8 @@ buildscript {
         classpath "org.owasp:dependency-check-gradle:3.3.4" 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.0"
         classpath "com.bmuschko:gradle-docker-plugin:4.0.4"
+	classpath "net.saliman.cobertura:cobertura:2.3.1"
+        classpath "com.github.kt3k.coveralls:coveralls:2.8.2'
         //Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -27,6 +29,7 @@ sonarqube {
         property "sonar.pitest.mode", "reuseReport"
     }
 }
+cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 
 allprojects {
     repositories {
@@ -93,4 +96,6 @@ dependencyUpdates.resolutionStrategy {
 
 check.dependsOn dependencyUpdates
 check.dependsOn dependencyCheckAggregate
-
+check.dependsOn cobertura
+check.dependsOn coveralls
+coveralls.dependsOn cobertura
