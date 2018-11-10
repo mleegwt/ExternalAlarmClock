@@ -92,4 +92,5 @@ dependencyUpdates.resolutionStrategy {
 }
 
 check.dependsOn dependencyUpdates
+check.dependsOn dependencyCheckAggregate
 
