@@ -15,6 +15,5 @@ install:
   - npm install -g snyk
 script: 
   - ./gradlew check
-  - snyk test --file=build.gradle --file=alarmclock/build.gradle 
-  - snyk test --docker externalalarmclock/alarmclock:latest --file=alarmclock/build/docker/Dockerfile
+  - snyk test --file=build.gradle --file=alarmclock/build.gradle
   - snyk monitor --org=mleegwt
