@@ -1,1 +1,3 @@
 include ':lib.externalalarmclock', ':lib.rpiws281x', ':alarmclock', ':test'
+
+rootProject.name = 'externalalarmclock'

@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'kotlin'
-apply plugin: 'gradle-one-jar'
 apply plugin: 'application'
+apply plugin: 'com.bmuschko.docker-java-application'
 
 mainClassName = "com.externalalarmclock.alarmclock.AlarmClockApplicationKt"
 
@@ -31,10 +31,14 @@ targetCompatibility = "1.8"
 // UTF-8 should be standard by now. So use it!
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-task oneJar(type: OneJar) {
-    mainClass = mainClassName
+docker {
+    javaApplication {
+        baseImage = 'resin/raspberry-pi-openjdk:8-jre'
+        maintainer = 'Michiel Leegwater <mleegwt@users.noreply.github.com>'
+        ports = [ 8080 ]
+        exec {
+            defaultCommand 'server conf/alarmclock.yml'
+        }
+    }
 }
-
-artifacts {
-    oneJar
-}
+assemble.dependsOn(dockerBuildImage)
