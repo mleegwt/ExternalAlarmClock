@@ -15,5 +15,5 @@ install:
   - npm install -g snyk
 script: 
   - ./gradlew check
+  - snyk test --file=build.gradle --file=alarmclock/build.gradle
   - snyk monitor --org=mleegwt
-  - snyk test
