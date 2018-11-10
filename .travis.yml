@@ -10,5 +10,10 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 node_js: "8"
-install: "npm install -g snyk"
-script: "snyk monitor --org=mleegwt && snyk test"
+install: 
+  - ./gradlew assemble 
+  - npm install -g snyk
+script: 
+  - ./gradlew check
+  - snyk monitor --org=mleegwt
+  - snyk test
