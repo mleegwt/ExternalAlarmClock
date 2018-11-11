@@ -54,6 +54,10 @@ configure(javaProjects()) {
             downloadJavadoc = false
         }
     }
+    
+    jacoco {
+        toolVersion = "0.8.2"
+    }
 
     pitest {
         targetClasses = ['com.*']
