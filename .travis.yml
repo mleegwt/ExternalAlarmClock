@@ -14,6 +14,6 @@ install:
   - ./gradlew assemble 
   - npm install -g snyk
 script: 
-  - ./gradlew check cobertura coveralls dependencies
+  - ./gradlew check cobertura coveralls alarmclock:dependencies
   - snyk test --file=build.gradle --file=alarmclock/build.gradle
   - snyk monitor --org=mleegwt
