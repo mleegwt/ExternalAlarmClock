@@ -9,7 +9,7 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-node_js: "8"
+node_js: "10"
 install: 
   - ./gradlew assemble 
   - npm install -g snyk
