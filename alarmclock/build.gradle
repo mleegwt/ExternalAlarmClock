@@ -32,6 +32,15 @@ targetCompatibility = "1.8"
 // UTF-8 should be standard by now. So use it!
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
+// WORKAROUND: Adding extra source set to allow docker to include configuration file.
+sourceSets {
+    main {
+         resources {
+             srcDirs "src/main/resources", "src/dist/config"
+         }
+    }
+}
+
 docker {
     javaApplication {
         baseImage = 'resin/raspberry-pi-openjdk:8-jre'
