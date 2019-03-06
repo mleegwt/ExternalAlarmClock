@@ -15,5 +15,5 @@ install:
   - npm install -g snyk
 script: 
   - ./gradlew check cobertura
-  - snyk test --file=build.gradle -- --configuration compile
+  - snyk test --file=alarmclock/build.gradle -- --configuration compile
   - snyk monitor --org=mleegwt
