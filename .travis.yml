@@ -12,7 +12,7 @@ cache:
 node_js: "10"
 install: 
   - ./gradlew assemble 
-  - ./gradlew dependencies
+  - ./gradlew dependencies -q
   - npm install -g snyk
 script: 
   - ./gradlew check
