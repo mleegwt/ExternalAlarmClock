@@ -17,4 +17,4 @@ install:
 script: 
   - ./gradlew check
   - snyk test --file=build.gradle --gradle-sub-project=alarmclock
-  - snyk monitor --org=mleegwt
+  - snyk monitor --org=mleegwt --file=build.gradle --gradle-sub-project=alarmclock
