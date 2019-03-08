@@ -9,6 +9,8 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+before_script:
+	- "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | sudo bash"
 node_js: "10"
 install: 
   - ./gradlew assemble 
@@ -18,3 +20,5 @@ script:
   - ./gradlew check
   - snyk test --file=build.gradle --gradle-sub-project=alarmclock
   - snyk monitor --org=mleegwt --file=build.gradle --gradle-sub-project=alarmclock
+  - fossa init
+  - fossa analyze
