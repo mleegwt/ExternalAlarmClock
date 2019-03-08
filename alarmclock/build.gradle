@@ -43,7 +43,7 @@ sourceSets {
 
 docker {
     javaApplication {
-        baseImage = 'balenalib/raspberry-pi-alpine-openjdk:8-jre'
+        baseImage = 'arm32v6/openjdk:8-jre-alpine'
         maintainer = 'Michiel Leegwater <mleegwt@users.noreply.github.com>'
         ports = [ 8080 ]
         exec {
