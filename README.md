@@ -1,7 +1,7 @@
 # ExternalAlarmClock
 
 
-[![Known Vulnerabilities](https://snyk.io/test/github/mleegwt/ExternalAlarmClock.git/badge.svg?targetFile=alarmclock/build.gradle)](https://snyk.io/test/github/mleegwt/ExternalAlarmClock.git) [![Build Status](https://travis-ci.org/mleegwt/ExternalAlarmClock.svg?branch=master)](https://travis-ci.org/mleegwt/ExternalAlarmClock) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=mleegwt/ExternalAlarmClock)](https://dependabot.com)
+[![Known Vulnerabilities](https://snyk.io/test/github/mleegwt/ExternalAlarmClock.git/badge.svg)](https://snyk.io/test/github/mleegwt/ExternalAlarmClock.git) [![Build Status](https://travis-ci.org/mleegwt/ExternalAlarmClock.svg?branch=master)](https://travis-ci.org/mleegwt/ExternalAlarmClock) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=mleegwt/ExternalAlarmClock)](https://dependabot.com)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmleegwt%2FExternalAlarmClock.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmleegwt%2FExternalAlarmClock?ref=badge_shield)
 
 This project contains a chain of programs that should ultimately result in a usable replacement for my wakeup light.
