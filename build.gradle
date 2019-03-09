@@ -102,9 +102,8 @@ dependencyUpdates.resolutionStrategy {
     }
   }
 }
-codeCoverageReport.dependsOn {
-    subprojects*.jacocoTestReport
-}
 check.dependsOn dependencyUpdates
 check.dependsOn dependencyCheckAggregate
-check.dependsOn codeCoverageReport
+check.dependsOn {
+    javaProjects()*.jacocoTestReport
+}
