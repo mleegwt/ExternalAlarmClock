@@ -1,6 +1,7 @@
 package com.externalalarmclock.lib.rpiws281x;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +13,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.externalalarmclock.rpiws281x.RpiWs281xLibrary;
+import com.externalalarmclock.rpiws281x.ws2811_channel_t;
+import com.externalalarmclock.rpiws281x.ws2811_t;
+import com.sun.jna.Memory;
+import com.sun.jna.Native;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RpiWs281xTest {
@@ -56,22 +62,40 @@ public class RpiWs281xTest {
 		}
 	}
 
+	private Integer initLib(InvocationOnMock inv) {
+		ws2811_t arg = inv.getArgument(0);
+		long intSize = Native.getNativeSize(int.class);
+		for (int i = 0; i < arg.channel.length - 1; i++) {
+			Memory mem = new Memory((channel.getLedCount() + 1) * intSize);
+			ws2811_channel_t channel = arg.channel[i];
+			channel.leds.setPointer(mem.getPointer(0));
+		}
+		return RpiWs281xLibrary.ws2811_return_t.WS2811_SUCCESS;
+
+	}
+
 	@Test
 	public void happyFLowTest() {
+		Mockito.when(lib.ws2811_init(Mockito.any())).thenAnswer(this::initLib);
 		wrapper.init(1, 1, channel);
+
+		Assert.assertArrayEquals(new Object[] { channel }, wrapper.getChannels().toArray());
 
 		Mockito.verify(lib).ws2811_init(Mockito.any());
 
 		Map<RpiWs281xChannel, List<Color>> pixels = new HashMap<>();
+		List<Color> colors = Arrays.asList(Color.BLACK, Color.BLUE, Color.YELLOW, Color.RED, Color.GREEN, Color.WHITE,
+				Color.GRAY, Color.PINK, Color.CYAN, Color.MAGENTA);
+		pixels.put(channel, colors);
 		wrapper.render(pixels);
 
 		Mockito.verify(lib).ws2811_render(Mockito.any());
 		Mockito.verify(lib).ws2811_wait(Mockito.any());
-		
+
 		wrapper.fini();
-		
+
 		Mockito.verify(lib).ws2811_fini(Mockito.any());
-		
+
 		// Verifying that we can restart now.
 		wrapper.init(1, 1, channel);
 	}
@@ -91,8 +115,7 @@ public class RpiWs281xTest {
 
 	@Test(expected = IllegalStateException.class)
 	public void renderWaitFailedTest() {
-		Mockito.when(lib.ws2811_wait(Mockito.any()))
-				.thenReturn(RpiWs281xLibrary.ws2811_return_t.WS2811_ERROR_GENERIC);
+		Mockito.when(lib.ws2811_wait(Mockito.any())).thenReturn(RpiWs281xLibrary.ws2811_return_t.WS2811_ERROR_GENERIC);
 		wrapper.init(1, 1, channel);
 		wrapper.render(new HashMap<>());
 	}

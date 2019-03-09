@@ -88,7 +88,6 @@ public class RpiWs281x implements IRpiWs281x {
 		if (ret != RpiWs281xLibrary.ws2811_return_t.WS2811_SUCCESS) {
 			throw new IllegalStateException("Failed to end rendering strip due to " + lib.ws2811_get_return_t_str(ret));
 		}
-
 	}
 
 	private void prepare(RpiWs281xChannel channel, List<Color> pixels) {
@@ -103,7 +102,7 @@ public class RpiWs281x implements IRpiWs281x {
 	}
 
 	private int corectGamma(int rgb) {
-		byte correctedW = (byte) GAMMA[(rgb & 0xFF000000) >> 24];
+		byte correctedW = (byte) GAMMA[(int) ((rgb & 0x0FF000000L) >> 24)];
 		byte correctedR = (byte) GAMMA[(rgb & 0x00FF0000) >> 16];
 		byte correctedG = (byte) GAMMA[(rgb & 0x0000FF00) >> 8];
 		byte correctedB = (byte) GAMMA[rgb & 0x000000FF];
