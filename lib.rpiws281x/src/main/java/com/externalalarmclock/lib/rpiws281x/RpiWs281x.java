@@ -84,7 +84,7 @@ public class RpiWs281x implements IRpiWs281x {
 		if (ret != RpiWs281xLibrary.ws2811_return_t.WS2811_SUCCESS) {
 			throw new IllegalStateException("Failed to render strip due to " + lib.ws2811_get_return_t_str(ret));
 		}
-		lib.ws2811_wait(strip);
+		ret = lib.ws2811_wait(strip);
 		if (ret != RpiWs281xLibrary.ws2811_return_t.WS2811_SUCCESS) {
 			throw new IllegalStateException("Failed to end rendering strip due to " + lib.ws2811_get_return_t_str(ret));
 		}
