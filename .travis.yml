@@ -18,6 +18,8 @@ install:
   - npm install -g snyk
 script: 
   - ./gradlew check
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
   - snyk test --file=build.gradle --gradle-sub-project=alarmclock
   - snyk monitor --org=mleegwt --file=build.gradle --gradle-sub-project=alarmclock
   - fossa init
