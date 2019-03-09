@@ -54,6 +54,13 @@ configure(javaProjects()) {
     jacoco {
         toolVersion = "0.8.3"
     }
+    
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled false
+        }
+    }
 
     pitest {
         targetClasses = ['com.*']
@@ -96,24 +103,6 @@ dependencyUpdates.resolutionStrategy {
   }
 }
 
-task codeCoverageReport(type: JacocoReport) {
-    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
-
-    subprojects.each {
-        sourceSets it.sourceSets.main
-    }
-
-    reports {
-        xml.enabled true
-        html.enabled false
-        csv.enabled false
-    }
-}
-
-codeCoverageReport.dependsOn {
-    subprojects*.test
-}
-
 check.dependsOn dependencyUpdates
 check.dependsOn dependencyCheckAggregate
-check.dependsOn codeCoverageReport
+check.dependsOn jacocoTestReport
