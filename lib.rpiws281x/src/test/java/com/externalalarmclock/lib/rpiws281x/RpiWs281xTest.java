@@ -13,15 +13,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.externalalarmclock.lib.rpiws281x.RpiWs281x.ILedChannel;
 import com.externalalarmclock.rpiws281x.RpiWs281xLibrary;
-import com.externalalarmclock.rpiws281x.RpiWs281xLibrary.ws2811_device;
-import com.externalalarmclock.rpiws281x.ws2811_channel_t;
-import com.externalalarmclock.rpiws281x.ws2811_t;
-import com.sun.jna.Memory;
-import com.sun.jna.Native;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RpiWs281xTest {
@@ -63,22 +58,11 @@ public class RpiWs281xTest {
 		}
 	}
 
-	private Integer initLib(InvocationOnMock inv) {
-		ws2811_t arg = inv.getArgument(0);
-		arg.device = new ws2811_device();
-		long intSize = Native.getNativeSize(int.class);
-		for (int i = 0; i < arg.channel.length - 1; i++) {
-			Memory mem = new Memory((channel.getLedCount() + 1) * intSize);
-			ws2811_channel_t channel = arg.channel[i];
-			channel.leds.setPointer(mem.getPointer(0));
-		}
-		return RpiWs281xLibrary.ws2811_return_t.WS2811_SUCCESS;
-
-	}
-
 	@Test
 	public void happyFLowTest() {
-		Mockito.when(lib.ws2811_init(Mockito.any())).thenAnswer(this::initLib);
+		// Making sure to avoid the JNA part that breaks the test.
+		wrapper.setChannel(Mockito.mock(ILedChannel.class));
+		
 		wrapper.init(1, 1, channel);
 
 		Assert.assertArrayEquals(new Object[] { channel }, wrapper.getChannels().toArray());
