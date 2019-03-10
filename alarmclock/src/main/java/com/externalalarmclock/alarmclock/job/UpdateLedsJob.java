@@ -22,6 +22,7 @@ import com.externalalarmclock.lib.rpiws281x.IRpiWs281x;
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel;
 import com.externalalarmclock.lib.rpiws281x.image.EStartCorner;
 import com.externalalarmclock.lib.rpiws281x.image.ImageConverter;
+import com.madgag.gif.fmsware.GifDecoder;
 
 import de.spinscale.dropwizard.jobs.Job;
 import de.spinscale.dropwizard.jobs.annotations.DelayStart;
@@ -75,8 +76,9 @@ public class UpdateLedsJob extends Job {
 			if (converter == null) {
 				Rectangle r = new Rectangle(0, 0, 32, 18);
 				InputStream resourceStream = SetNextAlarmResource.class.getResourceAsStream("/sunup.gif");
-				converter = new ImageConverter(r, false, EStartCorner.BOTTOM_RIGHT, resourceStream);
-				converter.init();
+				GifDecoder decoder = new GifDecoder();
+				decoder.read(resourceStream);
+				converter = new ImageConverter(r, false, EStartCorner.BOTTOM_RIGHT, decoder);
 			}
 
 			Duration afterStart = Duration.between(now, start);
