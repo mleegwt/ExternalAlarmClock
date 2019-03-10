@@ -3,7 +3,7 @@ matrix:
   include:
     - os: linux
       dist: xenial
-      jdk: openjdk
+      jdk: openjdk8
     - os: linux
       jdk: oraclejdk8
 before_cache:
