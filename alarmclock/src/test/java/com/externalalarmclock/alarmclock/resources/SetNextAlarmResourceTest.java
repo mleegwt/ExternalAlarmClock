@@ -1,15 +1,14 @@
 
 package com.externalalarmclock.alarmclock.resources;
 
+import java.util.Arrays;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 import com.externalalarmclock.alarmclock.AlarmStore;
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel;
 import com.externalalarmclock.pojo.ExternalAlarm;
-
-import java.util.List;
-import java.util.Arrays;
-
-import org.junit.Test;
-import org.junit.Assert;
 
 public class SetNextAlarmResourceTest {
 	private final AlarmStore alarmStore = new AlarmStore();
