@@ -1,10 +1,8 @@
 
 package com.externalalarmclock.alarmclock.resources;
 
-import java.util.List;
-
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class CapabilitiesResourceTest {
 	@Test

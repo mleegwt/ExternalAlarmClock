@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,24 +15,17 @@ import com.madgag.gif.fmsware.GifDecoder;
 public class ImageConverter {
 	private GifDecoder decoder;
 	private Shape destination;
-	private InputStream imageSource;
 	private boolean includeCorners;
 	private EStartCorner startCorner;
 	private int width;
 	private int height;
 
 	public ImageConverter(Rectangle destination, boolean includeCorners, EStartCorner startCorner,
-			InputStream imageSource) {
+			GifDecoder decoder) {
 		this.destination = destination;
 		this.includeCorners = includeCorners;
-		this.imageSource = imageSource;
 		this.startCorner = startCorner;
-
-		decoder = new GifDecoder();
-	}
-
-	public boolean init() {
-		return decoder.read(imageSource) == 0;
+		this.decoder = decoder;
 	}
 
 	public int getFrames() {
