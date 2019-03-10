@@ -17,6 +17,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.externalalarmclock.rpiws281x.RpiWs281xLibrary;
+import com.externalalarmclock.rpiws281x.RpiWs281xLibrary.ws2811_device;
 import com.externalalarmclock.rpiws281x.ws2811_channel_t;
 import com.externalalarmclock.rpiws281x.ws2811_t;
 import com.sun.jna.Memory;
@@ -64,6 +65,7 @@ public class RpiWs281xTest {
 
 	private Integer initLib(InvocationOnMock inv) {
 		ws2811_t arg = inv.getArgument(0);
+		arg.device = new ws2811_device();
 		long intSize = Native.getNativeSize(int.class);
 		for (int i = 0; i < arg.channel.length - 1; i++) {
 			Memory mem = new Memory((channel.getLedCount() + 1) * intSize);
