@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -32,6 +33,7 @@ sonarqube {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
     }
 }
 
@@ -103,7 +105,7 @@ dependencyUpdates.resolutionStrategy {
   }
 }
 check.dependsOn dependencyUpdates
-check.dependsOn dependencyCheckAggregate
+//check.dependsOn dependencyCheckAggregate
 check.dependsOn {
     javaProjects()*.jacocoTestReport
 }

@@ -33,6 +33,8 @@ public class RpiWs281x implements IRpiWs281x {
 	private int channelIndex;
 
 	private boolean initialized;
+	
+	private ILedChannel channel = this::setLed;
 
 	public RpiWs281x(RpiWs281xLibrary lib) {
 		this.lib = lib;
@@ -88,22 +90,30 @@ public class RpiWs281x implements IRpiWs281x {
 		if (ret != RpiWs281xLibrary.ws2811_return_t.WS2811_SUCCESS) {
 			throw new IllegalStateException("Failed to end rendering strip due to " + lib.ws2811_get_return_t_str(ret));
 		}
-
 	}
 
 	private void prepare(RpiWs281xChannel channel, List<Color> pixels) {
-		long intSize = Native.getNativeSize(int.class);
 		int ledCount = channel.getLedCount();
 		ws2811_channel_t libChannel = strip.channel[channelIndexMap.get(channel)];
 		for (int i = 0; i < ledCount; i++) {
-			ByteBuffer byteBuffer = libChannel.leds.getPointer().getByteBuffer(i * intSize, intSize);
-			byteBuffer.asIntBuffer().put(corectGamma(pixels.get(i).getRGB()));
-
+			int correctedPixel = corectGamma(pixels.get(i).getRGB());
+			this.channel.setLed(libChannel, i, correctedPixel);
 		}
 	}
 
+	@FunctionalInterface
+	interface ILedChannel {
+		void setLed(ws2811_channel_t libChannel, int i, int correctedPixel);
+	}
+	
+	void setLed(ws2811_channel_t libChannel, int i, int correctedPixel) {
+		long intSize = Native.getNativeSize(int.class);
+		ByteBuffer byteBuffer = libChannel.leds.getPointer().getByteBuffer(i * intSize, intSize);
+		byteBuffer.asIntBuffer().put(correctedPixel);
+	}
+	
 	private int corectGamma(int rgb) {
-		byte correctedW = (byte) GAMMA[(rgb & 0xFF000000) >> 24];
+		byte correctedW = (byte) GAMMA[(int) ((rgb & 0x0FF000000L) >> 24)];
 		byte correctedR = (byte) GAMMA[(rgb & 0x00FF0000) >> 16];
 		byte correctedG = (byte) GAMMA[(rgb & 0x0000FF00) >> 8];
 		byte correctedB = (byte) GAMMA[rgb & 0x000000FF];
@@ -122,5 +132,9 @@ public class RpiWs281x implements IRpiWs281x {
 	@Override
 	public Collection<RpiWs281xChannel> getChannels() {
 		return channelIndexMap.keySet();
+	}
+
+	void setChannel(ILedChannel channel) {
+		this.channel = channel;
 	}
 }
