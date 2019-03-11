@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.externalalarmclock.lib.rpiws281x.image.Rgb2Rgbw;
 import com.externalalarmclock.rpiws281x.RpiWs281xLibrary;
 import com.externalalarmclock.rpiws281x.ws2811_channel_t;
 import com.externalalarmclock.rpiws281x.ws2811_t;
@@ -95,8 +96,9 @@ public class RpiWs281x implements IRpiWs281x {
 	private void prepare(RpiWs281xChannel channel, List<Color> pixels) {
 		int ledCount = channel.getLedCount();
 		ws2811_channel_t libChannel = strip.channel[channelIndexMap.get(channel)];
+		Rgb2Rgbw convert = new Rgb2Rgbw();
 		for (int i = 0; i < ledCount; i++) {
-			int correctedPixel = corectGamma(pixels.get(i).getRGB());
+			int correctedPixel = convert.getRgbw(corectGamma(pixels.get(i).getRGB()));
 			this.channel.setLed(libChannel, i, correctedPixel);
 		}
 	}
