@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-	compile 'net.java.dev.jna:jna:4.1.0'
+	compile 'net.java.dev.jna:jna:5.2.0'
 	compile 'com.madgag:animated-gif-lib:1.4'
 
     testCompile 'junit:junit:4.12'
