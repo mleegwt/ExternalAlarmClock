@@ -9,7 +9,7 @@ project.ext {
 
 dependencies {
     compile project(':lib.rpiws281x')
-    testCompile 'io.dropwizard:dropwizard-core:1.3.9'
+    testCompile 'io.dropwizard:dropwizard-core:1.3.10'
 }
 
 sourceCompatibility = "1.8"
