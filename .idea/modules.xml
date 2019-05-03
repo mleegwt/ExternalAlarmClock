@@ -3,9 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ExternalAlarmClock.iml" filepath="$PROJECT_DIR$/ExternalAlarmClock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/alarmclock/alarmclock.iml" filepath="$PROJECT_DIR$/.idea/modules/alarmclock/alarmclock.iml" />
       <module fileurl="file://$PROJECT_DIR$/alarmclock/alarmclock.iml" filepath="$PROJECT_DIR$/alarmclock/alarmclock.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/externalalarmclock.iml" filepath="$PROJECT_DIR$/.idea/modules/externalalarmclock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib.externalalarmclock/lib.externalalarmclock.iml" filepath="$PROJECT_DIR$/.idea/modules/lib.externalalarmclock/lib.externalalarmclock.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib.externalalarmclock/lib.externalalarmclock.iml" filepath="$PROJECT_DIR$/lib.externalalarmclock/lib.externalalarmclock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib.rpiws281x/lib.rpiws281x.iml" filepath="$PROJECT_DIR$/.idea/modules/lib.rpiws281x/lib.rpiws281x.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test/test.iml" filepath="$PROJECT_DIR$/.idea/modules/test/test.iml" />
     </modules>
   </component>
 </project>
