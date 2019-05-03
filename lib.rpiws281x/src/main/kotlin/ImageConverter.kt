@@ -3,10 +3,8 @@ package com.externalalarmclock.lib.rpiws281x.image
 import java.awt.Color
 import java.awt.Rectangle
 import java.awt.Shape
-import java.awt.geom.Rectangle2D
 import java.awt.image.BufferedImage
 import java.util.ArrayList
-import java.util.Collections
 
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
 import com.madgag.gif.fmsware.GifDecoder
@@ -40,15 +38,14 @@ class ImageConverter(destination: Rectangle, private val includeCorners: Boolean
         getImageBorders(scaled, top, bottom, left, right)
 
         // Assuming clockwise
-        Collections.reverse(left)
-        Collections.reverse(bottom)
+        left.reverse()
+        bottom.reverse()
 
         val result = createLedStripContents(top, bottom, left, right)
 
-        while (result.size < channel.ledCount) {
-            result.add(Color(0x00000000, true))
+        return result + (result.size..channel.ledCount).map {
+            Color(0x00000000, true)
         }
-        return result
     }
 
     private fun getImageBorders(scaled: BufferedImage, top: MutableList<Color>, bottom: MutableList<Color>, left: MutableList<Color>,
@@ -64,14 +61,11 @@ class ImageConverter(destination: Rectangle, private val includeCorners: Boolean
 
     private fun addColorToBorder(top: MutableList<Color>, bottom: MutableList<Color>, left: MutableList<Color>, right: MutableList<Color>, x: Int,
                                  y: Int, color: Color) {
-        if (y == 0) {
-            top.add(color)
-        } else if (y == height - 1) {
-            bottom.add(color)
-        } else if (x == 0) {
-            left.add(color)
-        } else if (x == width - 1) {
-            right.add(color)
+        when {
+            y == 0 -> top.add(color)
+            y == height - 1 -> bottom.add(color)
+            x == 0 -> left.add(color)
+            x == width - 1 -> right.add(color)
         }
     }
 
@@ -88,36 +82,14 @@ class ImageConverter(destination: Rectangle, private val includeCorners: Boolean
     }
 
     private fun createLedStripContents(top: List<Color>, bottom: List<Color>, left: List<Color>,
-                                       right: List<Color>): MutableList<Color> {
-        val result = ArrayList<Color>()
-        when (startCorner) {
-            EStartCorner.BOTTOM_LEFT -> {
-                result.addAll(left)
-                result.addAll(top)
-                result.addAll(right)
-                result.addAll(bottom)
-            }
-            EStartCorner.BOTTOM_RIGHT -> {
-                result.addAll(bottom)
-                result.addAll(left)
-                result.addAll(top)
-                result.addAll(right)
-            }
-            EStartCorner.TOP_LEFT -> {
-                result.addAll(top)
-                result.addAll(right)
-                result.addAll(bottom)
-                result.addAll(left)
-            }
-            EStartCorner.TOP_RIGHT -> {
-                result.addAll(right)
-                result.addAll(bottom)
-                result.addAll(left)
-                result.addAll(top)
-            }
+                                       right: List<Color>): List<Color> {
+        return when (startCorner) {
+            EStartCorner.BOTTOM_LEFT -> left + top + right + bottom
+            EStartCorner.BOTTOM_RIGHT -> bottom + left + top + right
+            EStartCorner.TOP_LEFT -> top + right + bottom + left
+            EStartCorner.TOP_RIGHT -> right + bottom + left + top
             else -> throw IllegalArgumentException("Unexpected start corder $startCorner")
         }
-        return result
     }
 
     // Poor man solution, no need for X environment.
