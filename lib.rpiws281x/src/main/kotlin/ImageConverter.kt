@@ -43,7 +43,7 @@ class ImageConverter(destination: Rectangle, private val includeCorners: Boolean
 
         val result = createLedStripContents(top, bottom, left, right)
 
-        return result + (result.size..channel.ledCount).map {
+        return result + (result.size until channel.ledCount).map {
             Color(0x00000000, true)
         }
     }
