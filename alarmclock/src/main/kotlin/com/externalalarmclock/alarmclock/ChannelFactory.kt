@@ -3,7 +3,14 @@ package com.externalalarmclock.alarmclock
 import com.externalalarmclock.lib.rpiws281x.ERpiWs281xStripType
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.annotation.JsonTypeName
+import io.dropwizard.jackson.Discoverable
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+internal interface IChannelFactory : Discoverable {
+    fun createChannel(): RpiWs281xChannel
+}
 
 @JsonTypeName("channel")
 class ChannelFactory : IChannelFactory {

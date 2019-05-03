@@ -88,7 +88,7 @@ class ImageConverter(destination: Rectangle, private val includeCorners: Boolean
             EStartCorner.BOTTOM_RIGHT -> bottom + left + top + right
             EStartCorner.TOP_LEFT -> top + right + bottom + left
             EStartCorner.TOP_RIGHT -> right + bottom + left + top
-            else -> throw IllegalArgumentException("Unexpected start corder $startCorner")
+            else -> throw IllegalArgumentException("Unexpected start corner $startCorner")
         }
     }
 

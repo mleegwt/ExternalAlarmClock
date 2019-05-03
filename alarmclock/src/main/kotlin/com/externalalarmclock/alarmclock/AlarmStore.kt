@@ -6,9 +6,9 @@ import java.util.HashMap
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
 
 class AlarmStore {
-    private val alarmTime = HashMap<RpiWs281xChannel, ZonedDateTime>()
+    private val alarmTime = HashMap<RpiWs281xChannel, ZonedDateTime?>()
 
-    fun getNextAlarm(channel: RpiWs281xChannel): ZonedDateTime {
+    fun getNextAlarm(channel: RpiWs281xChannel): ZonedDateTime? {
         return alarmTime[channel]
     }
 
