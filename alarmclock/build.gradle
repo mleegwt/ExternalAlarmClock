@@ -28,7 +28,7 @@ repositories {
 
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
-
+compileKotlin.kotlinOptions.jvmTarget = "1.8"
 // UTF-8 should be standard by now. So use it!
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 

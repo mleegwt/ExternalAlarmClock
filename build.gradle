@@ -56,12 +56,16 @@ configure(javaProjects()) {
     
     jacoco {
         toolVersion = "0.8.3"
+        reportsDir = file("${buildDir}/reports/jacoco")
     }
-    
+
     jacocoTestReport {
         reports {
             xml.enabled true
-            html.enabled false
+            xml.destination file("${buildDir}/reports/jacoco/report.xml")
+            html.enabled true
+            html.destination file("${buildDir}/reports/jacoco/report.html")
+            csv.enabled false
         }
     }
 
@@ -77,7 +81,7 @@ configure(javaProjects()) {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
         testCompile 'junit:junit:4.12'
-	testCompile 'com.openpojo:openpojo:0.8.12'
+        testCompile 'com.openpojo:openpojo:0.8.12'
         testCompile group: 'org.mockito', name: 'mockito-core', version: '2.27.0'
     }
 }
@@ -107,8 +111,6 @@ dependencyUpdates.resolutionStrategy {
     }
   }
 }
+
 check.dependsOn dependencyUpdates
-//check.dependsOn dependencyCheckAggregate
-check.dependsOn {
-    javaProjects()*.jacocoTestReport
-}
+check.dependsOn javaProjects()*.jacocoTestReport
