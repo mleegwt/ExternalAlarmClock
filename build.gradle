@@ -23,6 +23,7 @@ buildscript {
 apply plugin: "base"
 apply plugin: "org.owasp.dependencycheck"
 apply plugin: "org.sonarqube"
+apply plugin: "jacoco"
 sonarqube {
     properties {
         property "sonar.sourceEncoding", "UTF-8"
@@ -58,15 +59,9 @@ configure(javaProjects()) {
         toolVersion = "0.8.3"
         reportsDir = file("${buildDir}/reports/jacoco")
     }
-
+    def jacocoExecutionDataFiles = fileTree(buildDir).include("/jacoco/*.exec")
     jacocoTestReport {
-        reports {
-            xml.enabled true
-            xml.destination file("${buildDir}/reports/jacoco/report.xml")
-            html.enabled true
-            html.destination file("${buildDir}/reports/jacoco/report.html")
-            csv.enabled false
-        }
+        executionData = jacocoExecutionDataFiles
     }
 
     pitest {
@@ -98,6 +93,23 @@ def appProjects() {
     subprojects.findAll { it.name.endsWith('app') }
 }
 
+task jacocoRootReport(type: JacocoReport) {
+    description = 'Generates an aggregate report from all subprojects'
+
+    additionalSourceDirs = files(javaProjects()*.sourceSets.main.allSource.srcDirs)
+    sourceDirectories = files(javaProjects()*.sourceSets.main.allSource.srcDirs)
+    classDirectories = files(javaProjects()*.sourceSets.main.output)
+    executionData = files(javaProjects()*.jacocoTestReport.executionData)
+    
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled true          
+        html.destination file("${buildDir}/reports/jacoco/report.html")
+        csv.enabled false
+    }
+}
+
 apply plugin: "com.github.ben-manes.versions"
 dependencyUpdates.resolutionStrategy {
   componentSelection { rules ->
@@ -113,4 +125,6 @@ dependencyUpdates.resolutionStrategy {
 }
 
 check.dependsOn dependencyUpdates
-check.dependsOn javaProjects()*.jacocoTestReport
+check.dependsOn jacocoRootReport
+jacocoRootReport.dependsOn javaProjects()*.jacocoTestReport
+
