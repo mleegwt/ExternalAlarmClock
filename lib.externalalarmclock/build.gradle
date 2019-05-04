@@ -9,4 +9,4 @@ dependencies {
 
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
-compileKotlin.kotlinOptions.jvmTarget = "1.7"
+compileKotlin.kotlinOptions.jvmTarget = "1.6"
