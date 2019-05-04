@@ -3,7 +3,6 @@ package com.externalalarmclock.lib.rpiws281x.image
 import java.awt.Color
 import java.awt.Rectangle
 import java.awt.image.BufferedImage
-import java.util.Arrays
 
 import org.junit.Assert
 import org.junit.Before
@@ -17,7 +16,6 @@ import com.madgag.gif.fmsware.GifDecoder
 
 @RunWith(MockitoJUnitRunner::class)
 class ImageConverterTest {
-
     private val decoder = Mockito.mock(GifDecoder::class.java)
 
     private val frame0 = BufferedImage(10, 6, BufferedImage.TYPE_INT_ARGB)
@@ -78,25 +76,11 @@ class ImageConverterTest {
     }
 
     companion object {
-        private val FRAME0_COLORS = Arrays.asList(Color.BLACK, Color.WHITE, Color.WHITE, Color.WHITE,
+        private val FRAME0_COLORS = listOf(Color.BLACK, Color.WHITE, Color.WHITE, Color.WHITE,
                 Color.BLACK, Color.BLUE, Color.BLACK, Color.GREEN, Color.GREEN, Color.GREEN, Color.BLACK, Color.RED,
                 Color.BLACK, Color.BLACK, Color.BLACK)
-        private val FRAME1_COLORS = Arrays.asList(Color.BLACK, Color.WHITE, Color.WHITE, Color.BLACK,
+        private val FRAME1_COLORS = listOf(Color.BLACK, Color.WHITE, Color.WHITE, Color.BLACK,
                 Color.BLACK, Color.BLUE, Color.BLACK, Color.BLACK, Color.GREEN, Color.GREEN, Color.BLACK, Color.RED,
                 Color.BLACK, Color.BLACK, Color.BLACK)
     }
 }
-
-/**
- * java.lang.AssertionError: expected:<[
- *
- * {000000}, {FFFFFF}, {FFFFFF}, {FFFFFF}, {000000}, {0000FF}, {000000},
- * {00FF00}, {00FF00}, {00FF00}, {000000}, {FF0000}
- *
- * ]> but was:<[
- *
- * {000000}, {FFFFFF}, {FFFFFF}, {000000}, {000000}, {0000FF}, {000000},
- * {000000}, {00FF00}, {00FF00}, {000000}, {FF0000}
- *
- * ]>
- */
