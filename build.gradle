@@ -23,6 +23,7 @@ buildscript {
 apply plugin: "base"
 apply plugin: "org.owasp.dependencycheck"
 apply plugin: "org.sonarqube"
+apply plugin: "jacoco"
 sonarqube {
     properties {
         property "sonar.sourceEncoding", "UTF-8"
