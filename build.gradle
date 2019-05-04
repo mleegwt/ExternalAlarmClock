@@ -100,6 +100,14 @@ task jacocoRootReport(type: JacocoReport) {
     sourceDirectories = files(javaProjects()*.sourceSets.main.allSource.srcDirs)
     classDirectories = files(javaProjects()*.sourceSets.main.output)
     executionData = files(javaProjects()*.jacocoTestReport.executionData)
+    
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled true          
+        html.destination file("${buildDir}/reports/jacoco/report.html")
+        csv.enabled false
+    }
 }
 
 apply plugin: "com.github.ben-manes.versions"
