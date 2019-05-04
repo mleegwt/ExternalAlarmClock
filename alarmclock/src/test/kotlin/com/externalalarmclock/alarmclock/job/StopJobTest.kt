@@ -3,10 +3,8 @@ package com.externalalarmclock.alarmclock.job
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
-import org.quartz.JobExecutionException
 import org.slf4j.LoggerFactory
 
-import com.externalalarmclock.alarmclock.job.StopJob
 import com.externalalarmclock.lib.rpiws281x.IRpiWs281x
 import org.quartz.JobExecutionContext
 
