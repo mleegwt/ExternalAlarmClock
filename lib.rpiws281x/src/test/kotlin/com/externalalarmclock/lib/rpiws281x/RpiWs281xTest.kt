@@ -79,7 +79,7 @@ class RpiWs281xTest {
 
     @Test(expected = IllegalStateException::class)
     fun renderNotInitializedTest() {
-        wrapper.render(null!!)
+        wrapper.render(HashMap())
     }
 
     @Test(expected = IllegalStateException::class)

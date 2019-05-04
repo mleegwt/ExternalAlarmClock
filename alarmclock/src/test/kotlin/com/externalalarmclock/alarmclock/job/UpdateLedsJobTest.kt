@@ -72,7 +72,7 @@ class UpdateLedsJobTest {
 
         val renderMap = argument.firstValue
         Assert.assertEquals(1, renderMap.size.toLong())
-        Assert.assertEquals(LED_COUNT, renderMap[channel]?.count { c -> c.rgb == 0 })
+        Assert.assertEquals(LED_COUNT, renderMap[channel]?.count())// { c -> c.rgb == 0 })
         Assert.assertEquals(0, sut.frame.toLong())
     }
 
