@@ -95,10 +95,10 @@ def appProjects() {
 task jacocoRootReport(type: JacocoReport) {
     description = 'Generates an aggregate report from all subprojects'
 
-    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
-    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
-    classDirectories = files(subprojects.sourceSets.main.output)
-    executionData = files(subprojects.jacocoTestReport.executionData)
+    additionalSourceDirs = files(javaProjects()*.sourceSets.main.allSource.srcDirs)
+    sourceDirectories = files(javaProjects()*.sourceSets.main.allSource.srcDirs)
+    classDirectories = files(javaProjects()*.sourceSets.main.output)
+    executionData = files(javaProjects()*.jacocoTestReport.executionData)
 }
 
 apply plugin: "com.github.ben-manes.versions"
