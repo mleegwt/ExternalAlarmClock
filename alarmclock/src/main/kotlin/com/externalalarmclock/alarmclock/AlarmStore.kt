@@ -12,7 +12,7 @@ class AlarmStore {
         return alarmTime[channel]
     }
 
-    fun setNextAlarm(alarmTime: ZonedDateTime) {
+    fun setNextAlarm(alarmTime: ZonedDateTime?) {
         for (channel in this.alarmTime.keys) {
             this.alarmTime[channel] = alarmTime
         }

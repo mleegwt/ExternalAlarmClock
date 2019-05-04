@@ -43,7 +43,7 @@ class StopJob(private val logger: Logger) : Job() {
 @DelayStart("5s")
 @Every("1s")
 class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmStore) : Job() {
-    private var device: IRpiWs281x? = null
+    private lateinit var device: IRpiWs281x
     private var converter: ImageConverter? = null
     private var frameCount = -1
     var frame: Int = 0
@@ -53,7 +53,7 @@ class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmSto
 
     @Throws(JobExecutionException::class)
     override fun doJob(context: JobExecutionContext) {
-        val channels = device!!.channels
+        val channels = device.channels
 
         val pixels = HashMap<RpiWs281xChannel, List<Color>>()
         for (channel in channels) {
@@ -64,7 +64,7 @@ class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmSto
             return
         }
 
-        device!!.render(pixels)
+        device.render(pixels)
     }
 
     private fun createPixelsForChannel(pixels: MutableMap<RpiWs281xChannel, List<Color>>, channel: RpiWs281xChannel) {
@@ -106,6 +106,6 @@ class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmSto
     }
 
     private fun getOffPixelList(channel: RpiWs281xChannel): List<Color> {
-        return (0 until channel.ledCount).map { _ -> this.noColor }
+        return (0 until channel.ledCount).map { this.noColor }
     }
 }

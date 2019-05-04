@@ -23,7 +23,7 @@ class SetNextAlarmResource(private val alarmStore: AlarmStore) {
         LOG.info("Next alarm set to: {}, vibrate: {}, wakeuplight: {}", alarmTime, alarm.isVibrate,
                 alarm.isWakeupLight, alarm.audioStream, alarm.ringTone)
 
-        alarmStore.setNextAlarm(alarmTime.toGregorianCalendar().toZonedDateTime())
+        alarmStore.setNextAlarm(alarmTime?.toGregorianCalendar()?.toZonedDateTime())
     }
 
     companion object {
