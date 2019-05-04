@@ -7,7 +7,6 @@ import com.externalalarmclock.alarmclock.job.UpdateLedsJob
 import com.externalalarmclock.alarmclock.resources.CapabilitiesResource
 import com.externalalarmclock.alarmclock.resources.SetNextAlarmResource
 import com.externalalarmclock.lib.rpiws281x.RpiWs281x
-import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
 import com.externalalarmclock.rpiws281x.RpiWs281xLibrary
 import de.spinscale.dropwizard.jobs.JobsBundle
 import io.dropwizard.Application
@@ -50,7 +49,7 @@ class AlarmClockApplication : Application<AlarmClockConfiguration>() {
 		environment.healthChecks().register("alarmclock", AlarmClockHealthCheck())
 		environment.jersey().register(CapabilitiesResource::class.java)
 		environment.jersey().register(SetNextAlarmResource(alarmStore))
-		alarmStore.addChannels(device.getChannels())
+		alarmStore.addChannels(device.channels)
 		updateLeds.setDevice(device)
 		stopJob.setDevice(device)
 	}

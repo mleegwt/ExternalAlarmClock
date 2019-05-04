@@ -11,15 +11,7 @@ import com.externalalarmclock.rpiws281x.RpiWs281xLibrary
 
 class Main(private val clear: Boolean) {
 
-    private val channel: RpiWs281xChannel
-        get() {
-            val channel = RpiWs281xChannel()
-            channel.brightness = 255.toByte()
-            channel.gpioNum = 18
-            channel.ledCount = 300
-            channel.stripType = ERpiWs281xStripType.SK6812_STRIP_GRBW
-            return channel
-        }
+    private val channel = RpiWs281xChannel(brightness = 255.toByte(), gpioNum = 18, ledCount = 300)
 
     fun showStableLeds(pixelSupplier: Function<RpiWs281xChannel, List<Color>>) {
         val dev = RpiWs281x(RpiWs281xLibrary.INSTANCE)

@@ -24,13 +24,6 @@ class ChannelFactory : IChannelFactory {
     private val stripType = ERpiWs281xStripType.SK6812_STRIP_GRBW
 
     override fun createChannel(): RpiWs281xChannel {
-        val channel = RpiWs281xChannel()
-
-        channel.brightness = brightness
-        channel.gpioNum = gpioNum
-        channel.ledCount = ledCount
-        channel.stripType = stripType
-
-        return channel
+        return RpiWs281xChannel(brightness = brightness, gpioNum = gpioNum, ledCount = ledCount, stripType = stripType)
     }
 }

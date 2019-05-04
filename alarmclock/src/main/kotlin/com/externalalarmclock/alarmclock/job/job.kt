@@ -21,8 +21,6 @@ import java.awt.Rectangle
 import java.time.Duration
 import java.time.ZonedDateTime
 import java.util.HashMap
-import java.util.stream.Collectors
-import java.util.stream.IntStream
 
 @OnApplicationStop
 class StopJob(private val logger: Logger) : Job() {
@@ -51,7 +49,6 @@ class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmSto
 
     private val noColor = Color(0x00000000, true)
 
-    @Throws(JobExecutionException::class)
     override fun doJob(context: JobExecutionContext) {
         val channels = device.channels
 
@@ -106,6 +103,6 @@ class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmSto
     }
 
     private fun getOffPixelList(channel: RpiWs281xChannel): List<Color> {
-        return (0 until channel.ledCount).map { this.noColor }
+        return (0 until channel.ledCount).map { noColor }
     }
 }
