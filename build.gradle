@@ -117,3 +117,5 @@ dependencyUpdates.resolutionStrategy {
 
 check.dependsOn dependencyUpdates
 check.dependsOn jacocoRootReport
+jacocoRootReport.dependsOn javaProjects()*.jacocoTestReport
+
