@@ -12,10 +12,10 @@ import com.externalalarmclock.lib.rpiws281x.image.EStartCorner
 import com.externalalarmclock.lib.rpiws281x.image.ImageConverter
 import com.madgag.gif.fmsware.GifDecoder
 
-import de.spinscale.dropwizard.jobs.Job
-import de.spinscale.dropwizard.jobs.annotations.DelayStart
-import de.spinscale.dropwizard.jobs.annotations.Every
-import de.spinscale.dropwizard.jobs.annotations.OnApplicationStop
+import io.dropwizard.jobs.Job
+import io.dropwizard.jobs.annotations.DelayStart
+import io.dropwizard.jobs.annotations.Every
+import io.dropwizard.jobs.annotations.OnApplicationStop
 import java.awt.Color
 import java.awt.Rectangle
 import java.time.Duration
