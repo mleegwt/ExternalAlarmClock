@@ -8,7 +8,7 @@ import com.externalalarmclock.alarmclock.resources.CapabilitiesResource
 import com.externalalarmclock.alarmclock.resources.SetNextAlarmResource
 import com.externalalarmclock.lib.rpiws281x.RpiWs281x
 import com.externalalarmclock.rpiws281x.RpiWs281xLibrary
-import de.spinscale.dropwizard.jobs.JobsBundle
+import io.dropwizard.jobs.JobsBundle
 import io.dropwizard.Application
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
