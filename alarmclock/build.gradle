@@ -47,7 +47,7 @@ docker {
         maintainer = 'Michiel Leegwater <mleegwt@users.noreply.github.com>'
         ports = [ 8080 ]
         exec {
-            defaultCommand "server", "/app/resources/alarmclock.yml"
+            defaultCommand 'server', '/app/resources/alarmclock.yml'
             entryPoint "java", "-cp", "/app/resources:/app/classes:/app/libs/*", "$mainClassName"
         }
     }
