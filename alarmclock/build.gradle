@@ -48,7 +48,7 @@ docker {
         ports = [ 8080 ]
         exec {
             //defaultCommand 'server /app/resources/alarmclock.yml'
-            entryPoint "java", "-cp", "/app/resources:/app/classes:/app/libs/*", "$mainClassName"
+            //entryPoint "java", "-cp", "/app/resources:/app/classes:/app/libs/*", "$mainClassName"
         }
     }
 }
