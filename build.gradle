@@ -76,7 +76,7 @@ configure(javaProjects()) {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
         testCompile 'junit:junit:4.12'
-        testCompile 'com.openpojo:openpojo:0.8.12'
+        testCompile 'com.openpojo:openpojo:0.8.13'
         testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
     }
 }
