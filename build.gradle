@@ -9,7 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.4.0'
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.1"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8"
         classpath "com.github.ben-manes:gradle-versions-plugin:0.25.0"
         classpath "org.owasp:dependency-check-gradle:5.2.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
