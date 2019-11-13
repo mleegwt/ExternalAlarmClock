@@ -96,10 +96,10 @@ def appProjects() {
 task jacocoRootReport(type: JacocoReport) {
     description = 'Generates an aggregate report from all subprojects'
 
-    additionalSourceDirs = files(javaProjects()*.sourceSets.main.allSource.srcDirs)
-    sourceDirectories = files(javaProjects()*.sourceSets.main.allSource.srcDirs)
-    classDirectories = files(javaProjects()*.sourceSets.main.output)
-    executionData = files(javaProjects()*.jacocoTestReport.executionData)
+    additionalSourceDirs.from = files(javaProjects()*.sourceSets.main.allSource.srcDirs)
+    sourceDirectories.from = files(javaProjects()*.sourceSets.main.allSource.srcDirs)
+    classDirectories.from = files(javaProjects()*.sourceSets.main.output)
+    executionData.from = files(javaProjects()*.jacocoTestReport.executionData)
     
     reports {
         xml.enabled true
