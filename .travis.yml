@@ -17,7 +17,7 @@ before_script:
     - "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | sudo bash"
 node_js: "10"
 install: 
-  - ./gradlew assemble 
+  - ./gradlew assemble --warning-mode all
   - ./gradlew dependencies -q
   - npm install -g snyk
 script: 
