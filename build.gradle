@@ -61,7 +61,7 @@ configure(javaProjects()) {
     }
     def jacocoExecutionDataFiles = fileTree(buildDir).include("/jacoco/*.exec")
     jacocoTestReport {
-        executionData = jacocoExecutionDataFiles
+        executionData.from = jacocoExecutionDataFiles
     }
 
     pitest {
