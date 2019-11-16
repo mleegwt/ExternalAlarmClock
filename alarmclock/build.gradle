@@ -41,7 +41,7 @@ sourceSets {
     }
 }
 
-/*docker {
+docker {
     javaApplication {
         baseImage = 'arm32v6/openjdk:8-jre-alpine'
         maintainer = 'Michiel Leegwater <mleegwt@users.noreply.github.com>'
@@ -53,4 +53,3 @@ sourceSets {
     }
 }
 assemble.dependsOn(dockerBuildImage)
-*/
