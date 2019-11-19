@@ -41,16 +41,15 @@ sourceSets {
     }
 }
 
-/*docker {
+docker {
     javaApplication {
         baseImage = 'arm32v6/openjdk:8-jre-alpine'
         maintainer = 'Michiel Leegwater <mleegwt@users.noreply.github.com>'
         ports = [ 8080 ]
-        exec {
-            defaultCommand 'server /app/resources/alarmclock.yml'
-            entryPoint "java", "-cp", "/app/resources:/app/classes:/app/libs/*", "$mainClassName"
-        }
+    }
+    dockerCreateDockerfile {
+        defaultCommand 'server /app/resources/alarmclock.yml'
+        entryPoint "java", "-cp", "/app/resources:/app/classes:/app/libs/*", "$mainClassName"
     }
 }
 assemble.dependsOn(dockerBuildImage)
-*/
