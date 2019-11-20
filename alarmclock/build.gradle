@@ -43,7 +43,7 @@ sourceSets {
 
 docker {
     javaApplication {
-        baseImage = 'arm32v6/openjdk:8-jre-alpine'
+        baseImage = 'azul/zulu-openjdk-alpine:11-jre'
         maintainer = 'Michiel Leegwater <mleegwt@users.noreply.github.com>'
         ports = [ 8080 ]
     }
