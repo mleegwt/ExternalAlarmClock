@@ -15,7 +15,7 @@ run {
 
 dependencies {
     compile 'io.dropwizard:dropwizard-core:1.3.17'
-    compile 'com.google.guava:guava:28.1-jre'
+    compile 'com.google.guava:guava:28.2-jre'
     compile project(':lib.externalalarmclock')
     compile project(':test')
     compile 'io.github.dropwizard-jobs:dropwizard-jobs-core:4.0.0-RELEASE'
