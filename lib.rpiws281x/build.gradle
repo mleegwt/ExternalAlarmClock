@@ -6,7 +6,7 @@ dependencies {
 	compile 'net.java.dev.jna:jna:4.1.0'
 	compile 'com.madgag:animated-gif-lib:1.4'
 
-    testCompile 'junit:junit:4.12'
+    testCompile 'junit:junit:4.13'
 }
 
 sourceCompatibility = "1.8"
