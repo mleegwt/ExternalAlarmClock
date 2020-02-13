@@ -84,7 +84,7 @@ configure(javaProjects()) {
         testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
-        testRuntimeOnly 'org.junit.jupiter:junit-vintage-engine:5.6.0'
+        testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.6.0'
     }
 }
 
