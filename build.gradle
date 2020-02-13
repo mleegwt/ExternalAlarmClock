@@ -71,6 +71,10 @@ configure(javaProjects()) {
         outputFormats = ['XML', 'HTML']
         failWhenNoMutations = false
     }
+    
+    test {
+        useJUnitPlatform()
+    }
 
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
@@ -78,6 +82,9 @@ configure(javaProjects()) {
         testCompile 'junit:junit:4.13'
         testCompile 'com.openpojo:openpojo:0.8.13'
         testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+        testRuntimeOnly 'org.junit.jupiter:junit-vintage-engine:5.3.1'
     }
 }
 
