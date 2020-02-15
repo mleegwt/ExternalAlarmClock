@@ -4,17 +4,18 @@ import java.awt.Color
 import java.awt.Rectangle
 import java.awt.image.BufferedImage
 
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mockito
-import org.mockito.junit.MockitoJUnitRunner
 
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
 import com.madgag.gif.fmsware.GifDecoder
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.Mock
+import org.mockito.junit.jupiter.MockitoExtension
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockitoExtension::class)
 class ImageConverterTest {
     private val decoder = Mockito.mock(GifDecoder::class.java)
 
@@ -25,7 +26,7 @@ class ImageConverterTest {
 
     private val channel = RpiWs281xChannel(ledCount = 15)
 
-    @Before
+    @BeforeEach
     fun setUp() {
         createFrame0()
         createFrame1()
@@ -37,14 +38,14 @@ class ImageConverterTest {
         Mockito.`when`(decoder.getFrame(Mockito.eq(0))).thenReturn(frame0)
         Mockito.`when`(decoder.getFrame(Mockito.eq(1))).thenReturn(frame1)
 
-        Assert.assertEquals(2, converter.frames.toLong())
+        Assertions.assertEquals(2, converter.frames.toLong())
 
         assertColorsEqual(FRAME0_COLORS, converter.getBorderPixels(0, channel))
         assertColorsEqual(FRAME1_COLORS, converter.getBorderPixels(1, channel))
     }
 
     private fun assertColorsEqual(expected: List<Color>, actual: List<Color>) {
-        Assert.assertEquals(expected.map(this::format), actual.map(this::format))
+        Assertions.assertEquals(expected.map(this::format), actual.map(this::format))
     }
 
     private fun format(color: Color): String {
