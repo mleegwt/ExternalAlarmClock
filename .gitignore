@@ -13,6 +13,7 @@ build-eclipse
 /.idea/libraries
 .DS_Store
 /build
+/out
 /captures
 .externalNativeBuild
 *.log
