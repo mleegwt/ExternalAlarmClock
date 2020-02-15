@@ -2,10 +2,8 @@ package com.externalalarmclock.test
 
 import org.junit.Test
 
-import com.openpojo.reflection.PojoClass
 import com.openpojo.reflection.filters.FilterPackageInfo
 import com.openpojo.reflection.impl.PojoClassFactory
-import com.openpojo.validation.Validator
 import com.openpojo.validation.ValidatorBuilder
 import com.openpojo.validation.affirm.Affirm
 import com.openpojo.validation.rule.impl.GetterMustExistRule
