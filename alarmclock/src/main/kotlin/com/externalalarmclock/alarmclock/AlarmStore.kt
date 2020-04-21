@@ -4,17 +4,19 @@ import java.time.ZonedDateTime
 import java.util.HashMap
 
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
+import java.time.Duration
 
 class AlarmStore {
-    private val alarmTime = HashMap<RpiWs281xChannel, ZonedDateTime?>()
+    lateinit var wakeUpLightDuration: Duration
+    private val alarmTime = HashMap<RpiWs281xChannel, Pair<ZonedDateTime?, ZonedDateTime?>?>()
 
-    fun getNextAlarm(channel: RpiWs281xChannel): ZonedDateTime? {
+    fun getNextAlarm(channel: RpiWs281xChannel): Pair<ZonedDateTime?, ZonedDateTime?>? {
         return alarmTime[channel]
     }
 
     fun setNextAlarm(alarmTime: ZonedDateTime?) {
         for (channel in this.alarmTime.keys) {
-            this.alarmTime[channel] = alarmTime
+            this.alarmTime[channel] = alarmTime to alarmTime?.minus(wakeUpLightDuration)
         }
     }
 

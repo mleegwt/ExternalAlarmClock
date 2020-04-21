@@ -2,7 +2,6 @@ package com.externalalarmclock.alarmclock.config
 
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.google.common.collect.ImmutableMap
 import io.dropwizard.jobs.JobConfiguration
 import io.dropwizard.Configuration
 import org.hibernate.validator.constraints.NotEmpty
@@ -11,7 +10,7 @@ import javax.validation.Valid
 import javax.validation.constraints.NotNull
 
 class AlarmClockConfiguration : Configuration(), JobConfiguration {
-	@NotEmpty
+    @NotEmpty
 	@get:JsonProperty
 	@set:JsonProperty
 	var template: String = "template"

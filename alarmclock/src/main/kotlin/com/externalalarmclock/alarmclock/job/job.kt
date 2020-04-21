@@ -66,10 +66,11 @@ class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmSto
 
     private fun createPixelsForChannel(pixels: MutableMap<RpiWs281xChannel, List<Color>>, channel: RpiWs281xChannel) {
         val now = ZonedDateTime.now()
-        val end = alarmStore.getNextAlarm(channel)
-        val start = end?.minusMinutes(30)
+        val alarm = alarmStore.getNextAlarm(channel)
+        val end = alarm?.first
+        val start = alarm?.second
 
-        if (start == null || now.isBefore(start) || now.isAfter(end)) {
+        if (start == null || now.isBefore(start) || now.isAfter(end?.plusSeconds(60))) {
             if (frameCount != -1) {
                 pixels[channel] = getOffPixelList(channel)
             }
@@ -77,7 +78,7 @@ class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmSto
             converter = null
             frameCount = -1
             frame = 0
-        } else if (now.isAfter(start) && now.isBefore(end)) {
+        } else if (now.isAfter(start) && now.isBefore(end?.plusSeconds(60))) {
             if (converter == null) {
                 val r = Rectangle(0, 0, 32, 18)
                 val resourceStream = SetNextAlarmResource::class.java.getResourceAsStream("/sunup.gif")
@@ -89,6 +90,9 @@ class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmSto
             val afterStart = Duration.between(now, start)
             val totalDuration = Duration.between(end, start)
             frame = (converter!!.frames * afterStart.toNanos() / totalDuration.toNanos()).toInt()
+            if (frame > converter!!.frames) {
+                frame = converter!!.frames - 1
+            }
 
             if (frame != frameCount) {
                 pixels[channel] = converter!!.getBorderPixels(frame, channel)
