@@ -4,7 +4,7 @@ apply plugin: 'kotlin'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 	compile 'com.fasterxml.jackson.core:jackson-annotations:2.10.3'
-	compile 'joda-time:joda-time:2.10.5'
+	compile 'joda-time:joda-time:2.10.6'
 }
 
 sourceCompatibility = "1.7"
