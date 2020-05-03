@@ -13,6 +13,7 @@ import io.dropwizard.Application
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
 import org.slf4j.LoggerFactory
+import java.time.Duration
 
 fun main(vararg args: String) {
 	AlarmClockApplication().run(*args)
@@ -31,7 +32,7 @@ class AlarmClockApplication : Application<AlarmClockConfiguration>() {
 		updateLeds = UpdateLedsJob(jobLogger, alarmStore)
 		stopJob = StopJob(jobLogger)
 		bootstrap.addBundle(JobsBundle(updateLeds, stopJob))
-		bootstrap.getObjectMapper().disable(
+		bootstrap.objectMapper.disable(
 			com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS
 		)
 	}
@@ -50,6 +51,7 @@ class AlarmClockApplication : Application<AlarmClockConfiguration>() {
 		environment.jersey().register(CapabilitiesResource::class.java)
 		environment.jersey().register(SetNextAlarmResource(alarmStore))
 		alarmStore.addChannels(device.channels)
+		alarmStore.wakeUpLightDuration = Duration.ofSeconds(30)
 		updateLeds.setDevice(device)
 		stopJob.setDevice(device)
 	}
