@@ -22,6 +22,6 @@ class SetNextAlarmResourceTest {
         val alarm = ExternalAlarm()
         resource.setNextAlarm(alarm)
 
-        Assert.assertNull(alarmStore.getNextAlarm(channel))
+        Assert.assertEquals(null to null, alarmStore.getNextAlarm(channel))
     }
 }
