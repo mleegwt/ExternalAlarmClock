@@ -14,12 +14,12 @@ run {
 }
 
 dependencies {
-    compile 'io.dropwizard:dropwizard-core:2.0.10'
-    compile 'com.google.guava:guava:29.0-jre'
-    compile project(':lib.externalalarmclock')
-    compile project(':test')
-    compile 'io.github.dropwizard-jobs:dropwizard-jobs-core:4.0.0-RELEASE'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'io.dropwizard:dropwizard-core:2.0.10'
+    implementation 'com.google.guava:guava:29.0-jre'
+    implementation project(':lib.externalalarmclock')
+    implementation project(':lib.rpiws281x')
+    implementation 'io.github.dropwizard-jobs:dropwizard-jobs-core:4.0.0-RELEASE'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 repositories {
