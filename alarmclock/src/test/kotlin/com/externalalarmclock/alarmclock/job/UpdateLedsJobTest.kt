@@ -34,6 +34,7 @@ class UpdateLedsJobTest {
 
         val channels = listOf(channel)
         alarmStore.addChannels(channels)
+        alarmStore.wakeUpLightDuration = Duration.ofMinutes(20)
     }
 
     @Test
