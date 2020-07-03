@@ -1,11 +1,10 @@
-language: java
-matrix: 
-  include:
-    - os: linux
-      dist: xenial
-      jdk: openjdk8
-#    - os: linux
-#      jdk: oraclejdk8
+language: android
+dist: trusty
+android:
+  components:
+    - build-tools-30.0.0
+    - android-30
+    - extra-google-m2repository
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
