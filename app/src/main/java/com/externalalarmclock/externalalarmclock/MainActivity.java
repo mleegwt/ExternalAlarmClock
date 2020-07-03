@@ -3,11 +3,13 @@ package com.externalalarmclock.externalalarmclock;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.externalalarmclock.app.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,13 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem settings = menu.findItem(R.id.action_settings);
         settings.setIcon(android.R.drawable.ic_menu_preferences);
-        settings.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(settingsIntent);
-                return true;
-            }
+        settings.setOnMenuItemClickListener(item1 -> {
+            Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
         });
 
         return true;

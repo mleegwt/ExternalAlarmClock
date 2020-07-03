@@ -3,6 +3,8 @@ package com.externalalarmclock.externalalarmclock;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.externalalarmclock.app.fragment.SettingsFragment;
+
 /**
  * Displays the settings.
  */
