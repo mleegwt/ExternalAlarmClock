@@ -6,6 +6,8 @@ import android.widget.ArrayAdapter;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.externalalarmclock.app.R;
+import com.externalalarmclock.app.util.RestHelper;
 import com.externalalarmclock.pojo.AlarmClockCapabilities;
 
 import java.net.URI;

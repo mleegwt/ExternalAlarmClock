@@ -2,7 +2,7 @@ package com.externalalarmclock.app.util;
 
 import android.app.AlarmManager;
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.joda.time.DateTime;
 

@@ -7,8 +7,8 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.AlarmClock;
-import android.support.annotation.DrawableRes;
-import android.support.v4.app.NotificationCompat;
+import androidx.annotation.DrawableRes;
+import androidx.core.app.NotificationCompat;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;

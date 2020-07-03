@@ -3,7 +3,7 @@ package com.externalalarmclock.app.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.externalalarmclock.app.R;
 
