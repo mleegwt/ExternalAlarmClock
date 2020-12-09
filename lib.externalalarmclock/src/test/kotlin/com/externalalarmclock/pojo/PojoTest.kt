@@ -1,4 +1,4 @@
-package com.externalalarmclock.test
+package com.externalalarmclock.pojo
 
 import org.junit.Test
 
@@ -14,8 +14,10 @@ import com.openpojo.validation.test.impl.SetterTester
 class PojoTest {
     @Test
     fun ensureExpectedPojoCount() {
-        val pojoClasses = PojoClassFactory.getPojoClasses(POJO_PACKAGE, FilterPackageInfo())
-        Affirm.affirmEquals("Classes added / removed?", EXPECTED_CLASS_COUNT, pojoClasses.size)
+        val pojoClasses = PojoClassFactory.getPojoClasses(POJO_PACKAGE, FilterPackageInfo()).filter { it.sourcePath
+            .contains("kotlin/main") }
+        Affirm.affirmEquals("Classes added / removed? ${pojoClasses.map { it.clazz }}", EXPECTED_CLASS_COUNT, pojoClasses
+            .size)
     }
 
     @Test

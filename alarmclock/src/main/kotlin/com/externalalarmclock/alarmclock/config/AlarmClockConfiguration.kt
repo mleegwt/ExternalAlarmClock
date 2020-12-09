@@ -9,15 +9,6 @@ import javax.validation.Valid
 import javax.validation.constraints.NotNull
 
 class AlarmClockConfiguration : Configuration(), JobConfiguration {
-	@get:JsonProperty
-	@set:JsonProperty
-	var template: String = "template"
-	@get:JsonProperty
-	@set:JsonProperty
-	var defaultName = "Stranger"
-	@get:JsonProperty
-	@set:JsonProperty
-	var viewRendererConfiguration: Map<String, Map<String, String>> = Collections.emptyMap()
 	@JsonProperty
 	@NotNull
 	@Valid

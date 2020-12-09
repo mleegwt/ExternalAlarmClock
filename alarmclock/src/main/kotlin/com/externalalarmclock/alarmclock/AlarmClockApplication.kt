@@ -23,9 +23,6 @@ class AlarmClockApplication : Application<AlarmClockConfiguration>() {
 	private lateinit var updateLeds: UpdateLedsJob
 	private lateinit var stopJob: StopJob
 	private val alarmStore = AlarmStore()
-	fun name(): String {
-		return "alarmclock"
-	}
 
 	override fun initialize(bootstrap: Bootstrap<AlarmClockConfiguration>) {
 		val jobLogger = LoggerFactory.getLogger("jobs")

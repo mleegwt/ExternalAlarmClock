@@ -12,7 +12,6 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 import java.awt.*
-import java.util.Arrays
 import java.util.HashMap
 
 @RunWith(MockitoJUnitRunner::class)
@@ -47,7 +46,7 @@ class RpiWs281xTest {
         }
     }
 
-    private fun fake(ws2811_channel_t: ws2811_channel_t, i: Int, j: Int): Unit {}
+    private fun fake(ws2811_channel_t: ws2811_channel_t, i: Int, j: Int) {}
 
     @Test
     fun happyFLowTest() {
@@ -61,7 +60,7 @@ class RpiWs281xTest {
         Mockito.verify<RpiWs281xLibrary>(lib).ws2811_init(Mockito.any<ws2811_t>())
 
         val pixels = HashMap<RpiWs281xChannel, List<Color>>()
-        val colors = Arrays.asList(Color.BLACK, Color.BLUE, Color.YELLOW, Color.RED, Color.GREEN, Color.WHITE,
+        val colors = listOf(Color.BLACK, Color.BLUE, Color.YELLOW, Color.RED, Color.GREEN, Color.WHITE,
                 Color.GRAY, Color.PINK, Color.CYAN, Color.MAGENTA)
         pixels[channel] = colors
         wrapper.render(pixels)
