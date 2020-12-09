@@ -1,4 +1,4 @@
-package com.externalalarmclock.test
+package com.externalalarmclock.pojo
 
 import org.junit.Test
 
