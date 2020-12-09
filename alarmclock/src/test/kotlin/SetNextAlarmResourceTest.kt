@@ -1,7 +1,5 @@
 package com.externalalarmclock.alarmclock.resources
 
-import java.util.Arrays
-
 import org.junit.Assert
 import org.junit.Test
 
@@ -17,8 +15,8 @@ class SetNextAlarmResourceTest {
     private val channel = RpiWs281xChannel()
     @Test
     fun setNextAlarmTest() {
-        alarmStore.wakeUpLightDuration = Duration.ofMinutes(30);
-        alarmStore.addChannels(Arrays.asList(channel))
+        alarmStore.wakeUpLightDuration = Duration.ofMinutes(30)
+        alarmStore.addChannels(listOf(channel))
         val alarm = ExternalAlarm()
         resource.setNextAlarm(alarm)
 
