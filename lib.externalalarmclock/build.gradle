@@ -3,7 +3,7 @@ apply plugin: 'kotlin'
 
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.1'
-    api 'joda-time:joda-time:2.10.9'
+    api 'joda-time:joda-time:2.10.10'
 }
 
 compileJava {
