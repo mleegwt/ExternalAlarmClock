@@ -79,7 +79,7 @@ configure(javaProjects()) {
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-        testImplementation 'junit:junit:4.13.1'
+        testImplementation 'junit:junit:4.13.2'
         testImplementation 'com.openpojo:openpojo:0.8.13'
         testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
         testImplementation 'org.mockito:mockito-junit-jupiter:3.5.2'
