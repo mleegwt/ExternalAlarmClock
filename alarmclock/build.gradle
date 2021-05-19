@@ -35,7 +35,7 @@ compileKotlin.kotlinOptions.jvmTarget = "1.8"
 sourceSets {
     main {
          resources {
-             srcDirs "src/main/resources", "src/dist/config"
+             srcDirs "src/dist/config"
          }
     }
 }
