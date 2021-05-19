@@ -29,7 +29,6 @@ sonarqube {
 
 allprojects {
     repositories {
-        jcenter()
         mavenCentral()
     }
 }
