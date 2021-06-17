@@ -33,7 +33,7 @@ allprojects {
 
     jacoco {
         toolVersion = "0.8.7"
-        reportsDir = file("${buildDir}/reports/jacoco")
+        reportsDirectory = file("${buildDir}/reports/jacoco")
     }
 }
 
