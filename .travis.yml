@@ -21,7 +21,7 @@ install:
   - ./gradlew dependencies -q
   - npm install -g snyk
 script: 
-  - ./gradlew check
+  - ./gradlew check --stacktrace
 after_success:
   - bash <(curl -s https://codecov.io/bash)
   - snyk test --file=build.gradle --gradle-sub-project=alarmclock

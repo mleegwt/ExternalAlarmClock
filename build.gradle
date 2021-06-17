@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.4.32'
+    ext.kotlin_version = '1.5.10'
     repositories {
         mavenCentral()
     }
@@ -30,6 +30,11 @@ allprojects {
     repositories {
         mavenCentral()
     }
+
+    jacoco {
+        toolVersion = "0.8.7"
+        reportsDirectory = file("${buildDir}/reports/jacoco")
+    }
 }
 
 configure(javaProjects()) {
@@ -48,11 +53,7 @@ configure(javaProjects()) {
             downloadJavadoc = false
         }
     }
-    
-    jacoco {
-        toolVersion = "0.8.7"
-        reportsDir = file("${buildDir}/reports/jacoco")
-    }
+
     def jacocoExecutionDataFiles = fileTree(buildDir).include("/jacoco/*.exec")
     jacocoTestReport {
         executionData.from = jacocoExecutionDataFiles
