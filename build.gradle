@@ -30,6 +30,11 @@ allprojects {
     repositories {
         mavenCentral()
     }
+
+    jacoco {
+        toolVersion = "0.8.7"
+        reportsDir = file("${buildDir}/reports/jacoco")
+    }
 }
 
 configure(javaProjects()) {
@@ -48,11 +53,7 @@ configure(javaProjects()) {
             downloadJavadoc = false
         }
     }
-    
-    jacoco {
-        toolVersion = "0.8.7"
-        reportsDir = file("${buildDir}/reports/jacoco")
-    }
+
     def jacocoExecutionDataFiles = fileTree(buildDir).include("/jacoco/*.exec")
     jacocoTestReport {
         executionData.from = jacocoExecutionDataFiles
