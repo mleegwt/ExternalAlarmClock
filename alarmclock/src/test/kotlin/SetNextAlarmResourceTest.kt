@@ -1,11 +1,10 @@
 package com.externalalarmclock.alarmclock.resources
 
-import org.junit.Assert
-import org.junit.Test
-
 import com.externalalarmclock.alarmclock.AlarmStore
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
 import com.externalalarmclock.pojo.ExternalAlarm
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 import java.time.Duration
 
@@ -20,6 +19,6 @@ class SetNextAlarmResourceTest {
         val alarm = ExternalAlarm()
         resource.setNextAlarm(alarm)
 
-        Assert.assertEquals(null to null, alarmStore.getNextAlarm(channel))
+        Assertions.assertEquals(null to null, alarmStore.getNextAlarm(channel))
     }
 }

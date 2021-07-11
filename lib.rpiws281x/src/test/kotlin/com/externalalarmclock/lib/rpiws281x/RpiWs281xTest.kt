@@ -5,6 +5,7 @@ import com.externalalarmclock.rpiws281x.ws2811_channel_t
 import com.externalalarmclock.rpiws281x.ws2811_t
 import org.junit.Assert
 import org.junit.Test
+import org.junit.jupiter.api.Assertions
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -42,7 +43,7 @@ class RpiWs281xTest {
         try {
             wrapper.init(1, 1, channel)
         } finally {
-            Mockito.verify(lib).ws2811_init(Mockito.any<ws2811_t>())
+            Mockito.verify(lib).ws2811_init(Mockito.any())
         }
     }
 
@@ -57,7 +58,7 @@ class RpiWs281xTest {
 
         Assert.assertArrayEquals(arrayOf<Any>(channel), wrapper.channels.toTypedArray())
 
-        Mockito.verify<RpiWs281xLibrary>(lib).ws2811_init(Mockito.any<ws2811_t>())
+        Mockito.verify(lib).ws2811_init(Mockito.any())
 
         val pixels = HashMap<RpiWs281xChannel, List<Color>>()
         val colors = listOf(Color.BLACK, Color.BLUE, Color.YELLOW, Color.RED, Color.GREEN, Color.WHITE,
@@ -65,34 +66,34 @@ class RpiWs281xTest {
         pixels[channel] = colors
         wrapper.render(pixels)
 
-        Mockito.verify<RpiWs281xLibrary>(lib).ws2811_render(Mockito.any<ws2811_t>())
-        Mockito.verify<RpiWs281xLibrary>(lib).ws2811_wait(Mockito.any<ws2811_t>())
+        Mockito.verify(lib).ws2811_render(Mockito.any())
+        Mockito.verify(lib).ws2811_wait(Mockito.any())
 
         wrapper.fini()
 
-        Mockito.verify<RpiWs281xLibrary>(lib).ws2811_fini(Mockito.any<ws2811_t>())
+        Mockito.verify(lib).ws2811_fini(Mockito.any())
 
         // Verifying that we can restart now.
         wrapper.init(1, 1, channel)
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun renderNotInitializedTest() {
-        wrapper.render(HashMap())
+        Assertions.assertThrows(IllegalStateException::class.java) { wrapper.render(HashMap()) }
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun renderFailedTest() {
-        Mockito.`when`(lib.ws2811_render(Mockito.any<ws2811_t>()))
+        Mockito.`when`(lib.ws2811_render(Mockito.any()))
                 .thenReturn(RpiWs281xLibrary.ws2811_return_t.WS2811_ERROR_GENERIC)
         wrapper.init(1, 1, channel)
-        wrapper.render(HashMap())
+        Assertions.assertThrows(IllegalStateException::class.java) { wrapper.render(HashMap()) }
     }
 
-    @Test(expected = IllegalStateException::class)
+    @Test
     fun renderWaitFailedTest() {
-        Mockito.`when`(lib.ws2811_wait(Mockito.any<ws2811_t>())).thenReturn(RpiWs281xLibrary.ws2811_return_t.WS2811_ERROR_GENERIC)
+        Mockito.`when`(lib.ws2811_wait(Mockito.any())).thenReturn(RpiWs281xLibrary.ws2811_return_t.WS2811_ERROR_GENERIC)
         wrapper.init(1, 1, channel)
-        wrapper.render(HashMap())
+        Assertions.assertThrows(IllegalStateException::class.java) { wrapper.render(HashMap()) }
     }
 }
