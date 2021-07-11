@@ -71,11 +71,6 @@ configure(javaProjects()) {
         useJUnitPlatform()
     }
 
-    compileTestJava {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
-    }
-
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
