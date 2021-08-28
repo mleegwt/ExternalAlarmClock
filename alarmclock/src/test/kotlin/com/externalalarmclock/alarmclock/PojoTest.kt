@@ -1,6 +1,5 @@
 package com.externalalarmclock.alarmclock
 
-import org.junit.Ignore
 import org.junit.Test
 
 import com.openpojo.reflection.filters.FilterPackageInfo
@@ -12,9 +11,7 @@ import com.openpojo.validation.rule.impl.SetterMustExistRule
 import com.openpojo.validation.test.impl.GetterTester
 import com.openpojo.validation.test.impl.SetterTester
 
-@Ignore
 class PojoTest {
-
     @Test
     fun ensureExpectedPojoCount() {
         val pojoClasses = PojoClassFactory.getPojoClasses(POJO_PACKAGE, FilterPackageInfo())
