@@ -4,20 +4,20 @@ import java.awt.Color
 import java.time.Duration
 import java.time.ZonedDateTime
 
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
 import org.slf4j.LoggerFactory
 
 import com.externalalarmclock.alarmclock.AlarmStore
 import com.externalalarmclock.lib.rpiws281x.IRpiWs281x
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
 import com.nhaarman.mockitokotlin2.*
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.junit.jupiter.MockitoExtension
 import org.quartz.JobExecutionContext
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockitoExtension::class)
 class UpdateLedsJobTest {
     private val alarmStore = AlarmStore()
     private val channel = RpiWs281xChannel(ledCount = LED_COUNT)
@@ -28,7 +28,7 @@ class UpdateLedsJobTest {
     private val context = mock<JobExecutionContext> {}
     private val argument = argumentCaptor<(Map<RpiWs281xChannel, List<Color>>)>()
 
-    @Before
+    @BeforeEach
     fun setUp() {
         val channels = listOf(channel)
         alarmStore.addChannels(channels)
@@ -44,7 +44,7 @@ class UpdateLedsJobTest {
         verify(device).channels
         verify(device, never()).render(any())
 
-        Assert.assertEquals(0, sut.frame.toLong())
+        Assertions.assertEquals(0, sut.frame.toLong())
     }
 
     @Test
@@ -56,7 +56,7 @@ class UpdateLedsJobTest {
         verify(device).channels
         verify(device).render(any())
 
-        Assert.assertEquals(20, sut.frame.toLong())
+        Assertions.assertEquals(20, sut.frame.toLong())
     }
 
     @Test
@@ -70,9 +70,9 @@ class UpdateLedsJobTest {
         verify(device, times(2)).render(argument.capture())
 
         val renderMap = argument.firstValue
-        Assert.assertEquals(1, renderMap.size.toLong())
-        Assert.assertEquals(LED_COUNT, renderMap[channel]?.count())// { c -> c.rgb == 0 })
-        Assert.assertEquals(0, sut.frame.toLong())
+        Assertions.assertEquals(1, renderMap.size.toLong())
+        Assertions.assertEquals(LED_COUNT, renderMap[channel]?.count())// { c -> c.rgb == 0 })
+        Assertions.assertEquals(0, sut.frame.toLong())
     }
 
     companion object {

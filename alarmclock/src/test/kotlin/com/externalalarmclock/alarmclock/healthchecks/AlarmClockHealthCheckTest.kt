@@ -1,13 +1,13 @@
 package com.externalalarmclock.alarmclock.healthchecks
 
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class AlarmClockHealthCheckTest {
     @Test
     fun testCheck() {
         val result = AlarmClockHealthCheck().check()
 
-        Assert.assertTrue(result.isHealthy)
+        Assertions.assertTrue(result.isHealthy)
     }
 }
