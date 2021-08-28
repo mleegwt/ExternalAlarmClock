@@ -42,7 +42,7 @@ class StopJob(private val logger: Logger) : Job() {
 @Every("1s")
 class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmStore) : Job() {
     private lateinit var device: IRpiWs281x
-    private var converter: ImageConverter? = null
+    private val converter: ImageConverter = createConverter()
     private var frameCount = -1
     var frame: Int = 0
         private set
@@ -75,31 +75,30 @@ class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmSto
                 pixels[channel] = getOffPixelList(channel)
             }
             logger.debug("Before alarm start {}-{}", start, end)
-            converter = null
             frameCount = -1
             frame = 0
         } else if (now.isAfter(start) && now.isBefore(end?.plusSeconds(60))) {
-            if (converter == null) {
-                val r = Rectangle(0, 0, 32, 18)
-                val resourceStream = SetNextAlarmResource::class.java.getResourceAsStream("/sunup.gif")
-                val decoder = GifDecoder()
-                decoder.read(resourceStream)
-                converter = ImageConverter(r, false, EStartCorner.BOTTOM_RIGHT, decoder)
-            }
-
             val afterStart = Duration.between(now, start)
             val totalDuration = Duration.between(end, start)
-            frame = (converter!!.frames * afterStart.toNanos() / totalDuration.toNanos()).toInt()
-            if (frame > converter!!.frames) {
-                frame = converter!!.frames - 1
+            frame = (converter.frames * afterStart.toNanos() / totalDuration.toNanos()).toInt()
+            if (frame > converter.frames) {
+                frame = converter.frames - 1
             }
 
             if (frame != frameCount) {
-                pixels[channel] = converter!!.getBorderPixels(frame, channel)
+                pixels[channel] = converter.getBorderPixels(frame, channel)
                 logger.info("During wakeup light {}-{}, frame {}", start, end, frame)
                 frameCount = frame
             }
         }
+    }
+
+    private fun createConverter(): ImageConverter {
+        val r = Rectangle(0, 0, 32, 18)
+        val resourceStream = SetNextAlarmResource::class.java.getResourceAsStream("/sunup.gif")
+        val decoder = GifDecoder()
+        decoder.read(resourceStream)
+        return ImageConverter(r, false, EStartCorner.BOTTOM_RIGHT, decoder)
     }
 
     fun setDevice(device: IRpiWs281x) {
