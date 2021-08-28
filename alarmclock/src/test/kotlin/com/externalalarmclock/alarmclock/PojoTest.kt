@@ -1,7 +1,5 @@
 package com.externalalarmclock.alarmclock
 
-import org.junit.Test
-
 import com.openpojo.reflection.filters.FilterPackageInfo
 import com.openpojo.reflection.impl.PojoClassFactory
 import com.openpojo.validation.ValidatorBuilder
@@ -10,6 +8,7 @@ import com.openpojo.validation.rule.impl.GetterMustExistRule
 import com.openpojo.validation.rule.impl.SetterMustExistRule
 import com.openpojo.validation.test.impl.GetterTester
 import com.openpojo.validation.test.impl.SetterTester
+import org.junit.jupiter.api.Test
 
 class PojoTest {
     @Test
