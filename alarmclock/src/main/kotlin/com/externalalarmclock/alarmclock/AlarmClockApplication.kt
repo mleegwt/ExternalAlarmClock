@@ -20,14 +20,12 @@ fun main(vararg args: String) {
 }
 
 class AlarmClockApplication : Application<AlarmClockConfiguration>() {
-	private lateinit var updateLeds: UpdateLedsJob
-	private lateinit var stopJob: StopJob
+	private val jobLogger = LoggerFactory.getLogger("jobs")
 	private val alarmStore = AlarmStore()
+	private val updateLeds = UpdateLedsJob(jobLogger, alarmStore)
+	private val stopJob = StopJob(jobLogger)
 
 	override fun initialize(bootstrap: Bootstrap<AlarmClockConfiguration>) {
-		val jobLogger = LoggerFactory.getLogger("jobs")
-		updateLeds = UpdateLedsJob(jobLogger, alarmStore)
-		stopJob = StopJob(jobLogger)
 		bootstrap.addBundle(JobsBundle(updateLeds, stopJob))
 		bootstrap.objectMapper.disable(
 			com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS
