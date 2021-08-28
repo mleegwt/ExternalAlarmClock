@@ -20,18 +20,16 @@ import org.quartz.JobExecutionContext
 @RunWith(MockitoJUnitRunner::class)
 class UpdateLedsJobTest {
     private val alarmStore = AlarmStore()
-    private val sut = UpdateLedsJob(LoggerFactory.getLogger(UpdateLedsJob::class.java), alarmStore)
-    private val channel = RpiWs281xChannel(ledCount = LED_COUNT)
     private val device = mock<IRpiWs281x> {
         on { channels } doReturn listOf(channel)
     }
+    private val sut = UpdateLedsJob(LoggerFactory.getLogger(UpdateLedsJob::class.java), alarmStore, device)
+    private val channel = RpiWs281xChannel(ledCount = LED_COUNT)
     private val context = mock<JobExecutionContext> {}
     private val argument = argumentCaptor<(Map<RpiWs281xChannel, List<Color>>)>()
 
     @Before
     fun setUp() {
-        sut.setDevice(device)
-
         val channels = listOf(channel)
         alarmStore.addChannels(channels)
         alarmStore.wakeUpLightDuration = Duration.ofMinutes(30)

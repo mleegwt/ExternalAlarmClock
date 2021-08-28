@@ -23,25 +23,19 @@ import java.time.ZonedDateTime
 import java.util.HashMap
 
 @OnApplicationStop
-class StopJob(private val logger: Logger) : Job() {
-    private var device: IRpiWs281x? = null
-
+class StopJob(private val logger: Logger, private val device: IRpiWs281x) : Job() {
     @Throws(JobExecutionException::class)
     override fun doJob(context: JobExecutionContext) {
         logger.debug("Stopping application")
-        device?.fini()
+        device.fini()
         logger.info("Alarmclock has stopped")
-    }
-
-    fun setDevice(device: IRpiWs281x) {
-        this.device = device
     }
 }
 
 @DelayStart("5s")
 @Every("1s")
-class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmStore) : Job() {
-    private lateinit var device: IRpiWs281x
+class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmStore, private val device: IRpiWs281x) :
+    Job() {
     private val converter: ImageConverter = createConverter()
     private var frameCount = -1
     var frame: Int = 0
@@ -99,10 +93,6 @@ class UpdateLedsJob(private val logger: Logger, private val alarmStore: AlarmSto
         val decoder = GifDecoder()
         decoder.read(resourceStream)
         return ImageConverter(r, false, EStartCorner.BOTTOM_RIGHT, decoder)
-    }
-
-    fun setDevice(device: IRpiWs281x) {
-        this.device = device
     }
 
     private fun getOffPixelList(channel: RpiWs281xChannel): List<Color> {

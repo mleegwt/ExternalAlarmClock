@@ -22,8 +22,9 @@ fun main(vararg args: String) {
 class AlarmClockApplication : Application<AlarmClockConfiguration>() {
 	private val jobLogger = LoggerFactory.getLogger("jobs")
 	private val alarmStore = AlarmStore()
-	private val updateLeds = UpdateLedsJob(jobLogger, alarmStore)
-	private val stopJob = StopJob(jobLogger)
+	private val device = RpiWs281x(RpiWs281xLibrary.INSTANCE)
+	private val updateLeds = UpdateLedsJob(jobLogger, alarmStore, device)
+	private val stopJob = StopJob(jobLogger, device)
 
 	override fun initialize(bootstrap: Bootstrap<AlarmClockConfiguration>) {
 		bootstrap.addBundle(JobsBundle(updateLeds, stopJob))
@@ -36,7 +37,6 @@ class AlarmClockApplication : Application<AlarmClockConfiguration>() {
 		configuration: AlarmClockConfiguration,
 		environment: Environment
 	) {
-		val device = RpiWs281x(RpiWs281xLibrary.INSTANCE)
 		device.init(
 			5,
 			RpiWs281xLibrary.WS2811_TARGET_FREQ,
@@ -47,7 +47,5 @@ class AlarmClockApplication : Application<AlarmClockConfiguration>() {
 		environment.jersey().register(SetNextAlarmResource(alarmStore))
 		alarmStore.addChannels(device.channels)
 		alarmStore.wakeUpLightDuration = Duration.ofSeconds(30)
-		updateLeds.setDevice(device)
-		stopJob.setDevice(device)
 	}
 }
