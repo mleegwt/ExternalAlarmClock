@@ -1,7 +1,7 @@
 # ExternalAlarmClock
 
 
-[![Build Status](https://travis-ci.com/mleegwt/ExternalAlarmClock.svg?branch=master)](https://travis-ci.org/mleegwt/ExternalAlarmClock)
+[![Java CI with Gradle](https://github.com/mleegwt/ExternalAlarmClock/actions/workflows/gradle.yml/badge.svg)](https://github.com/mleegwt/ExternalAlarmClock/actions/workflows/gradle.yml)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmleegwt%2FExternalAlarmClock.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmleegwt%2FExternalAlarmClock?ref=badge_shield) [![codecov](https://codecov.io/gh/mleegwt/ExternalAlarmClock/branch/master/graph/badge.svg)](https://codecov.io/gh/mleegwt/ExternalAlarmClock)
 
 This project contains a chain of programs that should ultimately result in a usable replacement for my wakeup light.
