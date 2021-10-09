@@ -6,12 +6,4 @@ dependencies {
     api 'joda-time:joda-time:2.10.12'
 }
 
-compileJava {
-    sourceCompatibility = "1.7"
-    targetCompatibility = "1.7"
-}
-compileTestJava {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
-}
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
