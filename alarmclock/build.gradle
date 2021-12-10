@@ -12,7 +12,7 @@ run {
 }
 
 dependencies {
-    implementation 'io.dropwizard:dropwizard-core:2.0.25'
+    implementation 'io.dropwizard:dropwizard-core:2.0.26'
     implementation 'com.google.guava:guava:31.0.1-jre'
     implementation project(':lib.externalalarmclock')
     implementation project(':lib.rpiws281x')
