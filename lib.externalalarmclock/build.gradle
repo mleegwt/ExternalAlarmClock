@@ -2,7 +2,7 @@ apply plugin: 'kotlin'
 
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.1'
-    api 'joda-time:joda-time:2.10.13'
+    api 'joda-time:joda-time:2.10.14'
 }
 
 compileKotlin.kotlinOptions.jvmTarget = "1.8"
