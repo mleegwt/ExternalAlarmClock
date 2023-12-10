@@ -2,7 +2,7 @@ apply plugin: 'kotlin'
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api 'net.java.dev.jna:jna:5.10.0'
+    api 'net.java.dev.jna:jna:5.14.0'
     api 'com.madgag:animated-gif-lib:1.4'
 }
 
