@@ -16,7 +16,7 @@ dependencies {
     implementation 'com.google.guava:guava:33.1.0-jre'
     implementation project(':lib.externalalarmclock')
     implementation project(':lib.rpiws281x')
-    implementation 'io.github.dropwizard-jobs:dropwizard-jobs-core:4.0.0-RELEASE'
+    implementation 'io.github.dropwizard-jobs:dropwizard-jobs-core:6.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
