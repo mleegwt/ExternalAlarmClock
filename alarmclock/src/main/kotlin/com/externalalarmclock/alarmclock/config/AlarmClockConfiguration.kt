@@ -3,7 +3,7 @@ package com.externalalarmclock.alarmclock.config
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.dropwizard.jobs.JobConfiguration
-import io.dropwizard.Configuration
+import io.dropwizard.core.Configuration
 import java.util.Collections
 import javax.validation.Valid
 import javax.validation.constraints.NotNull
