@@ -5,14 +5,3 @@ dependencies {
     api 'net.java.dev.jna:jna:5.19.1'
     api 'com.madgag:animated-gif-lib:1.4'
 }
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
-    }
-}
