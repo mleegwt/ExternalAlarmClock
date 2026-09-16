@@ -10,7 +10,7 @@ project.ext {
 }
 
 run {
- args 'server', configPath + 'alarmclock.yml'
+    args 'server', configPath + 'alarmclock.yml'
 }
 
 dependencies {
@@ -26,4 +26,3 @@ repositories {
   mavenLocal()
 }
 
-compileKotlin.kotlinOptions.jvmTarget = "1.8"
