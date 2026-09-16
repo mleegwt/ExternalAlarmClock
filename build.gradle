@@ -113,7 +113,7 @@ task jacocoRootReport(type: JacocoReport) {
     }
 }
 
-apply plugin: "com.github.ben-manes.versions"
+apply plugin: "io.github.ben-manes.versions"
 dependencyUpdates.resolutionStrategy {
   componentSelection { rules ->
     rules.all { ComponentSelection selection ->
