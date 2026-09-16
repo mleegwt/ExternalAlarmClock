@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import io.dropwizard.jobs.JobConfiguration
 import io.dropwizard.core.Configuration
 import java.util.Collections
-import javax.validation.Valid
-import javax.validation.constraints.NotNull
+import jakarta.validation.Valid
+import jakarta.validation.constraints.NotNull
 
 class AlarmClockConfiguration : Configuration(), JobConfiguration {
 	@JsonProperty
