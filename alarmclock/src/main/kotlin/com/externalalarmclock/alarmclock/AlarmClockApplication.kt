@@ -27,7 +27,7 @@ class AlarmClockApplication : Application<AlarmClockConfiguration>() {
 	private val stopJob = StopJob(jobLogger, device)
 
 	override fun initialize(bootstrap: Bootstrap<AlarmClockConfiguration>) {
-		bootstrap.addBundle(JobsBundle(updateLeds, stopJob))
+		bootstrap.addBundle(JobsBundle(listOf(updateLeds, stopJob)))
 		bootstrap.objectMapper.disable(
 			com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS
 		)
