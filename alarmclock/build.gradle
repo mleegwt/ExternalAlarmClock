@@ -1,14 +1,16 @@
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-mainClassName = "com.externalalarmclock.alarmclock.AlarmClockApplicationKt"
+application {
+    mainClass = "com.externalalarmclock.alarmclock.AlarmClockApplicationKt"
+}
 
 project.ext {
     configPath = "$project.projectDir/src/dist/conf/"
 }
 
 run {
- args 'server', configPath + 'alarmclock.yml'
+    args 'server', configPath + 'alarmclock.yml'
 }
 
 dependencies {
@@ -24,4 +26,3 @@ repositories {
   mavenLocal()
 }
 
-compileKotlin.kotlinOptions.jvmTarget = "1.8"
