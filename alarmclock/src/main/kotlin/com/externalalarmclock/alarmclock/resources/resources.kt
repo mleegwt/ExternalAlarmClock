@@ -1,9 +1,10 @@
 package com.externalalarmclock.alarmclock.resources
 
-import javax.ws.rs.POST
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
-import javax.ws.rs.core.MediaType
+import jakarta.ws.rs.GET
+import jakarta.ws.rs.POST
+import jakarta.ws.rs.Path
+import jakarta.ws.rs.Produces
+import jakarta.ws.rs.core.MediaType
 
 import org.slf4j.LoggerFactory
 
@@ -11,7 +12,6 @@ import com.codahale.metrics.annotation.Timed
 import com.externalalarmclock.alarmclock.AlarmStore
 import com.externalalarmclock.pojo.AlarmClockCapabilities
 import com.externalalarmclock.pojo.ExternalAlarm
-import javax.ws.rs.GET
 
 @Path("/setNextAlarm")
 @Produces(MediaType.APPLICATION_JSON)

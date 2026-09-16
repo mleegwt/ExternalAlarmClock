@@ -9,9 +9,9 @@ import com.externalalarmclock.alarmclock.resources.SetNextAlarmResource
 import com.externalalarmclock.lib.rpiws281x.RpiWs281x
 import com.externalalarmclock.rpiws281x.RpiWs281xLibrary
 import io.dropwizard.jobs.JobsBundle
-import io.dropwizard.Application
-import io.dropwizard.setup.Bootstrap
-import io.dropwizard.setup.Environment
+import io.dropwizard.core.Application
+import io.dropwizard.core.setup.Bootstrap
+import io.dropwizard.core.setup.Environment
 import org.slf4j.LoggerFactory
 import java.time.Duration
 
@@ -27,7 +27,7 @@ class AlarmClockApplication : Application<AlarmClockConfiguration>() {
 	private val stopJob = StopJob(jobLogger, device)
 
 	override fun initialize(bootstrap: Bootstrap<AlarmClockConfiguration>) {
-		bootstrap.addBundle(JobsBundle(updateLeds, stopJob))
+		bootstrap.addBundle(JobsBundle(listOf(updateLeds, stopJob)))
 		bootstrap.objectMapper.disable(
 			com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS
 		)
