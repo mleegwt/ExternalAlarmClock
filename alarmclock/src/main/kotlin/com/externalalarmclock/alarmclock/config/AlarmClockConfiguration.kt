@@ -3,12 +3,11 @@ package com.externalalarmclock.alarmclock.config
 import com.externalalarmclock.lib.rpiws281x.RpiWs281xChannel
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.dropwizard.jobs.JobConfiguration
-import io.dropwizard.core.Configuration
 import java.util.Collections
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotNull
 
-class AlarmClockConfiguration : Configuration(), JobConfiguration {
+class AlarmClockConfiguration : JobConfiguration() {
 	@JsonProperty
 	@NotNull
 	@Valid
