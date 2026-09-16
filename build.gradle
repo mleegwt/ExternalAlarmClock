@@ -103,11 +103,13 @@ task jacocoRootReport(type: JacocoReport) {
     executionData.from = files(javaProjects()*.jacocoTestReport.executionData)
     
     reports {
-        xml.enabled true
-        xml.destination file("${buildDir}/reports/jacoco/report.xml")
-        html.enabled true          
-        html.destination file("${buildDir}/reports/jacoco/report.html")
-        csv.enabled false
+        xml.required = true
+        xml.outputLocation = layout.buildDirectory.file("reports/jacoco/report.xml")
+    
+        html.required = true
+        html.outputLocation = layout.buildDirectory.dir("reports/jacoco/report-html")
+    
+        csv.required = false
     }
 }
 
