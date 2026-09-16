@@ -27,4 +27,4 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
     - name: Coverage
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v7
