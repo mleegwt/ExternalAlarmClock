@@ -6,7 +6,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.15.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -16,6 +15,7 @@ plugins {
     id 'org.sonarqube' version "7.5.0.8588"
     id 'jacoco'
     id "com.github.ben-manes.versions" version "0.51.0"
+    id 'info.solidsoft.pitest' version '1.19.0' apply false
 }
 sonarqube {
     properties {
