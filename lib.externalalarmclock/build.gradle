@@ -1,6 +1,6 @@
 apply plugin: 'kotlin'
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.22'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.23'
     api 'joda-time:joda-time:2.14.4'
 }
